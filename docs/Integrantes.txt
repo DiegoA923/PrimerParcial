@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+Diego Alejandro Alfonso Lopez 20242020111
+Sebastian David Trujillo Vargas 20242020217
+Yhoan Mauricio Bermudez Tique 20242020242
+=======
+Sebastian David Trujillo Vargas 20242020217
+Yhoan Mauricio Bermudez Tique 20242020242
+Diego Alejandro Alfonso Lopez 20242020111
+>>>>>>> bb22295ff32a2a1ce6bd0ed88fa2a5e8e6f36ebd
