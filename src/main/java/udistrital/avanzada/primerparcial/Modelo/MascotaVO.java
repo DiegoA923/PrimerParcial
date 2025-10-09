@@ -12,15 +12,12 @@ package udistrital.avanzada.primerparcial.Modelo;
 public class MascotaVO extends Animal {
 
     private int id;
-    private String nombre;
     private String apodo;
-    private String tipoAlimento;
 
-    public MascotaVO(String nombre, String apodo, String tipoAlimento, String clasificacion, String familia, String genero, String especie) {
-        super(clasificacion, familia, genero, especie);
-        this.nombre = nombre;
+    public MascotaVO(int id, String apodo, String nombreComun, String clasificacion, String familia, String genero, String especie, String tipoAlimento) {
+        super(nombreComun, clasificacion, familia, genero, especie, tipoAlimento);
+        this.id = id;
         this.apodo = apodo;
-        this.tipoAlimento = tipoAlimento;
     }
 
     public int getId() {
@@ -31,28 +28,12 @@ public class MascotaVO extends Animal {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getApodo() {
         return apodo;
     }
 
     public void setApodo(String apodo) {
         this.apodo = apodo;
-    }
-
-    public String getTipoAlimento() {
-        return tipoAlimento;
-    }
-
-    public void setTipoAlimento(String tipoAlimento) {
-        this.tipoAlimento = tipoAlimento;
     }
 
 }
