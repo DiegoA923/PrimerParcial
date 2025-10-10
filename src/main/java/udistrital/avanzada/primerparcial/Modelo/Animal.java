@@ -1,20 +1,52 @@
 package udistrital.avanzada.primerparcial.Modelo;
 
 /**
- * Super clase animal para la sustitucion de liskov
+ * Clase abstracta que representa un animal genérico dentro del sistema.
+ * <p>
+ * Esta clase sirve como superclase para las mascotas exóticas y define las
+ * características comunes que todas comparten. Se usa para aplicar el principio
+ * de sustitución de Liskov (LSP).
+ * </p>
  *
  * @author mauricio
+ * @version 1.0
+ * @since 2025-10-09
+ * @modified Diego - 2025-10-10: Se reemplazaron los String por Enum para
+ * clasificación y alimento.
  */
 public abstract class Animal {
 
     protected String nombreComun;
-    protected String clasificacion;
+    protected Clasificacion clasificacion;
     protected String familia;
     protected String genero;
     protected String especie;
-    protected String tipoAlimento;
+    protected TipoAlimento tipoAlimento;
 
-    public Animal(String nombreComun, String clasificacion, String familia, String genero, String especie, String tipoAlimento) {
+    /**
+     * Constructor vacío de la clase Animal.
+     * <p>
+     * Permite crear una instancia de Animal sin inicializar sus atributos. Este
+     * constructor es útil para permitir la herencia y la creación de objetos de
+     * sus subclases (como MascotaVO) mediante el constructor por defecto,
+     * especialmente cuando los valores se asignan posteriormente con métodos
+     * setter o por procesos automáticos del patrón DAO.
+     */
+    public Animal() {
+
+    }
+
+    /**
+     * Constructor principal del animal.
+     *
+     * @param nombreComun nombre común del animal
+     * @param clasificacion clasificación taxonómica del animal
+     * @param familia familia biológica del animal
+     * @param genero género biológico
+     * @param especie especie biológica
+     * @param tipoAlimento tipo de alimento principal
+     */
+    public Animal(String nombreComun, Clasificacion clasificacion, String familia, String genero, String especie, TipoAlimento tipoAlimento) {
         this.nombreComun = nombreComun;
         this.clasificacion = clasificacion;
         this.familia = familia;
@@ -29,14 +61,6 @@ public abstract class Animal {
 
     public void setNombreComun(String nombreComun) {
         this.nombreComun = nombreComun;
-    }
-
-    public String getClasificacion() {
-        return clasificacion;
-    }
-
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
     }
 
     public String getFamilia() {
@@ -63,12 +87,19 @@ public abstract class Animal {
         this.especie = especie;
     }
 
-    public String getTipoAlimento() {
+    public Clasificacion getClasificacion() {
+        return clasificacion;
+    }
+
+    public void setClasificacion(Clasificacion clasificacion) {
+        this.clasificacion = clasificacion;
+    }
+
+    public TipoAlimento getTipoAlimento() {
         return tipoAlimento;
     }
 
-    public void setTipoAlimento(String tipoAlimento) {
+    public void setTipoAlimento(TipoAlimento tipoAlimento) {
         this.tipoAlimento = tipoAlimento;
     }
-
 }
