@@ -21,7 +21,7 @@ public abstract class Animal {
     protected String familia;
     protected String genero;
     protected String especie;
-    protected TipoAlimento tipoAlimento;
+    protected transient TipoAlimento tipoAlimento;
 
     /**
      * Constructor vacío de la clase Animal.
