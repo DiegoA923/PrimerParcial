@@ -135,7 +135,9 @@ public class ConexionSerializable implements IConexionSobrescribible {
             fileIn = new FileInputStream(archivo);
             entrada = new ObjectInputStream(fileIn);
         } catch (FileNotFoundException ex) {
+            throw new RuntimeException("Archivo no encontrado: " + ex.getMessage(), ex);
         } catch (IOException ex) {
+            throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
     }
 }
