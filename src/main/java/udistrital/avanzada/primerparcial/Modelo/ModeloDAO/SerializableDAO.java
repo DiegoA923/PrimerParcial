@@ -27,14 +27,14 @@ public class SerializableDAO {
      *
      * @return un ArrayList de MascotaVO
      */
-    public ArrayList<MascotaVO> cargar() {
+    public ArrayList<MascotaVO> listaDeMascotas() {
         ArrayList<MascotaVO> mascotas = null;
         ObjectInputStream entrada = null;
         conexionSerializable.conectar();
         entrada = conexionSerializable.getEntrada();
         try {
             mascotas = (ArrayList<MascotaVO>) entrada.readObject();
-        //Propagacion de errores para que los maneje capa control
+            //Propagacion de errores para que los maneje capa control
         } catch (IOException ex) {
             throw new RuntimeException("Error en deserializacion: " + ex.getMessage(), ex);
         } catch (NullPointerException ex) {

@@ -41,7 +41,7 @@ public class ConexionSerializable implements IConexionSobrescribible {
         this.salida = null;
         this.archivo = null;
     }
-    
+
     /**
      * Contructor ConexionSerializable con parametro de archivo
      *
@@ -71,7 +71,11 @@ public class ConexionSerializable implements IConexionSobrescribible {
             fileIn = new FileInputStream(archivo);
             entrada = new ObjectInputStream(fileIn);
         } catch (FileNotFoundException ex) {
+            //Propagacion para que lo maneje capa control
+            throw new RuntimeException("Archivo no encontrado: " + ex.getMessage(), ex);
         } catch (IOException ex) {
+            //Propagacion para que lo maneje capa control
+            throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
     }
 
@@ -119,11 +123,10 @@ public class ConexionSerializable implements IConexionSobrescribible {
     public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
-    
+
     /**
-     * Metodo para conectar de forma que se sobrescriba el archivo
-     * serializado
-     * 
+     * Metodo para conectar de forma que se sobrescriba el archivo serializado
+     *
      */
     @Override
     public void conectarSobrescribible() {
@@ -135,8 +138,10 @@ public class ConexionSerializable implements IConexionSobrescribible {
             fileIn = new FileInputStream(archivo);
             entrada = new ObjectInputStream(fileIn);
         } catch (FileNotFoundException ex) {
+            //Propagacion para que lo maneje capa control
             throw new RuntimeException("Archivo no encontrado: " + ex.getMessage(), ex);
         } catch (IOException ex) {
+            //Propagacion para que lo maneje capa control
             throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
     }
