@@ -11,6 +11,8 @@ package udistrital.avanzada.primerparcial.Control;
  * @version 1.0
  */
 public class Launcher {
-
+    public static void main(String[] args) {
+        new ControlPrincipal();
+    }
 }
 
