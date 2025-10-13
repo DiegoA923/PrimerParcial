@@ -101,6 +101,7 @@ public class GestorArchivoAleatorio {
      * @param mascota 
      */
     public void insertarMascota(MascotaVO mascota) {
+        // Delegamos a la clase dao
         aleatorioDAO.insertarMascota(mascota);       
     }
     

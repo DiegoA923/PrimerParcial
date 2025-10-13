@@ -29,31 +29,24 @@ public class ConexionSerializable implements IConexionSobrescribible {
 
     //Archivo fuente
     private File archivo;
+    
+    private static final ConexionSerializable instancia = new ConexionSerializable();
 
     /**
      * Contructor ConexionSerializable vacio
      *
      */
-    public ConexionSerializable() {
+    private ConexionSerializable() {
         this.fileIn = null;
         this.fileOut = null;
         this.entrada = null;
         this.salida = null;
         this.archivo = null;
     }
-
-    /**
-     * Contructor ConexionSerializable con parametro de archivo
-     *
-     * @param archivo archivo con extension bin
-     */
-    public ConexionSerializable(File archivo) {
-        this.fileIn = null;
-        this.fileOut = null;
-        this.entrada = null;
-        this.salida = null;
-        this.archivo = archivo;
-    }
+    
+    public static ConexionSerializable getInstancia() {
+        return instancia;
+    }    
 
     /**
      * Metodo para conectar a los canales de salida y entrada

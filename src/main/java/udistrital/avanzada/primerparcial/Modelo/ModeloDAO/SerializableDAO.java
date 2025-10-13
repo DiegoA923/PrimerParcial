@@ -19,7 +19,7 @@ public class SerializableDAO {
     private ConexionSerializable conexionSerializable;
 
     public SerializableDAO() {
-        this.conexionSerializable = new ConexionSerializable();
+        this.conexionSerializable = ConexionSerializable.getInstancia();
     }
 
     /**
