@@ -1,4 +1,4 @@
-package udistrital.avanzada.primerparcial.Control.ControlDAO;
+package udistrital.avanzada.primerparcial.Control;
 
 
 /**
