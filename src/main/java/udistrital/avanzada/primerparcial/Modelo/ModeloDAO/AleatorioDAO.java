@@ -2,11 +2,8 @@ package udistrital.avanzada.primerparcial.Modelo.ModeloDAO;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionAleatorio;
-import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 
 /**
  * Clase DAO
@@ -22,22 +19,19 @@ public class AleatorioDAO {
     private ConexionAleatorio conexion;
     
     /**
-     * Constructor
-     * 
-     * @param ruta del archivo aleatorio
+     * Constructor    
      */
-    public AleatorioDAO(String ruta) {
+    public AleatorioDAO() {
+        //Obtenemos la instancia de la conexion
         this.conexion = ConexionAleatorio.getInstancia();
-        // Asignar ruta del archivo a la conexion
-        this.conexion.setRuta(ruta);
     }
 
     /**
      * Metodo para escribir una mascota
      *
-     * @param mascota
+     * @param mascota MascotaVO
      */
-    public void escribirMascota(MascotaVO mascota) {
+    public void insertarMascota(MascotaVO mascota) {
         try {
             conexion.conectar();
             RandomAccessFile raf = conexion.getArchivo();
@@ -59,43 +53,19 @@ public class AleatorioDAO {
     }
 
     /**
-     * Metodo para obtener la lista de mascotas contenida en el archivo
+     * Metodo para obtener la lista de mascotas
      *
-     * @return lista de MascotaVO
+     * @return RandomAccessFile con la lista de mascotas
      */
-    public ArrayList<MascotaVO> listaDeMascotas() {
-        ArrayList<MascotaVO> mascotas = new ArrayList<>();
+    public RandomAccessFile listaDeMascotas() {
+        RandomAccessFile raf = null;
         try {
             conexion.conectar();
-            RandomAccessFile raf = conexion.getArchivo();
-            raf.seek(0);
-            while (raf.getFilePointer() < raf.length()) {
-                int id = raf.readInt();
-                String nombre = leerCampo(raf, LongitudesMascota.NOMBRE);
-                String apodo = leerCampo(raf, LongitudesMascota.APODO);
-                String clasificacion = leerCampo(raf, LongitudesMascota.CLASIFICACION);
-                String familia = leerCampo(raf, LongitudesMascota.FAMILIA);
-                String genero = leerCampo(raf, LongitudesMascota.GENERO);
-                String especie = leerCampo(raf, LongitudesMascota.ESPECIE);
-                String tipoAlimento = leerCampo(raf, LongitudesMascota.TIPO_ALIMENTO);
-                MascotaVO mascota = new MascotaVO(
-                        id,
-                        apodo.trim(),
-                        nombre.trim(),
-                        Clasificacion.valueOf(clasificacion.trim().toUpperCase()),
-                        familia.trim(),
-                        genero.trim(),
-                        especie.trim(),
-                        TipoAlimento.valueOf(tipoAlimento.trim().toUpperCase())
-                );
-                mascotas.add(mascota);
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException("Error al leer: " + ex.getMessage(), ex);
-        } finally {
-            conexion.desconectar();
+            raf = conexion.getArchivo();
+        } catch (RuntimeException ex) {
+            
         }
-        return mascotas;
+        return raf;
     }
 
     /**
@@ -114,24 +84,23 @@ public class AleatorioDAO {
             throw new RuntimeException("Error al escribir: " + ex.getMessage(), ex);
         }
 
-    }
-
+    }    
+    
     /**
-     * Metodo auxiliar para leer un campo string en especifico dando su longitud
-     *
-     * @param raf RandomAccessFile de donde se lee
-     * @param longitud cantidad caracteres que conforman el campo
-     * @return
+     * Metodo para asignar la ruta del archivo aleatorio a la conexion
+     * 
+     * @param ruta 
      */
-    private String leerCampo(RandomAccessFile raf, int longitud) {
-        StringBuilder sb = new StringBuilder();
-        try {
-            for (int i = 0; i < longitud; i++) {
-                sb.append(raf.readChar());
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException("Error al leer: " + ex.getMessage(), ex);
-        }
-        return sb.toString();
+    public void setArchivoAleatorio(String ruta) {
+        // Conexion asigna la ruta
+        this.conexion.setRuta(ruta);
+    }
+    
+    /**
+     * Metodo para cerrar conexion de archivo
+     */
+    public void desconectar() {
+        // lo maneja la conexion directamente
+        conexion.desconectar();
     }
 }
