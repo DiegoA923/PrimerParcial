@@ -20,13 +20,9 @@ import java.util.Properties;
  * lo que permite modificar la conexión sin alterar el código fuente.
  * </p>
  *
- * <p>
- * Las clases DAO no dependen directamente de esta clase, sino de la interfaz {@link IConexion},
- * promoviendo el principio de inversión de dependencias (D de SOLID).
- * </p>
  *
  * @author Diego
- * @version 1.1
+ * @version 1.0
  * @since 2025-10-10
  */
 public class ConexionBD implements IConexion {
