@@ -138,4 +138,18 @@ public class ConexionSerializable implements IConexionSobrescribible {
             throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
     }
+    
+    /**
+     * Metodo para saber si archivo serializado existe
+     * 
+     * @return true si existe, false si no
+     */
+    public boolean archivoExiste() {
+        try {
+            return archivo.exists() && archivo.isFile();
+        } catch (Exception e) {
+            // Si hay excepcion es que no exite
+            return false;
+        }        
+    }
 }
