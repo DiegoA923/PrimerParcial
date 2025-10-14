@@ -38,10 +38,7 @@ public class ControlMenu {
      
     private void registrarEventos() {
         panel.getBtnInsertar().addActionListener(e -> vista.mostrarPanel(VentanaPrincipal.PANEL_INSERTAR));
-
-        panel.getBtnModificar().addActionListener(e
-                -> JOptionPane.showMessageDialog(vista, "Función modificar próximamente disponible.")
-        );
+        panel.getBtnModificar().addActionListener(e -> vista.mostrarPanel(VentanaPrincipal.PANEL_MODIFICAR));
 
         panel.getBtnEliminar().addActionListener(e
                 -> JOptionPane.showMessageDialog(vista, "Función eliminar próximamente disponible.")

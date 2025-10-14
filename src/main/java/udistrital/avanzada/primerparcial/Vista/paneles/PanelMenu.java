@@ -310,6 +310,25 @@ public class PanelMenu extends JPanel {
     }
 
     /**
+     * Obtiene la mascota actualmente seleccionada en la tabla.
+     * <p>
+     * Si no hay ninguna fila seleccionada, devuelve {@code null}. Este método
+     * se utiliza por el controlador del menú para pasar la mascota seleccionada
+     * al panel de modificación.
+     * </p>
+     *
+     * @return objeto {@link MascotaVO} correspondiente a la fila seleccionada,
+     * o {@code null} si no hay ninguna selección.
+     */
+    public MascotaVO getMascotaSeleccionada() {
+        int fila = tablaMascotas.getSelectedRow();
+        if (fila == -1 || mascotas == null || fila >= mascotas.size()) {
+            return null;
+        }
+        return mascotas.get(fila);
+    }
+
+    /**
      * Métodos de acceso a los botones, tabla y filtros del panel.
      * <p>
      * Permiten al controlador vincular eventos y actualizar los datos
