@@ -19,7 +19,7 @@ public class SerializableDAO {
     private ConexionSerializable conexionSerializable;
 
     public SerializableDAO() {
-        this.conexionSerializable = new ConexionSerializable();
+        this.conexionSerializable = ConexionSerializable.getInstancia();
     }
 
     /**
@@ -76,5 +76,14 @@ public class SerializableDAO {
      */
     public void setArchivo(File archivo) {
         this.conexionSerializable.setArchivo(archivo);
+    }
+    
+    /**
+     * Metodo para saber si el archivo configurado existe
+     * 
+     * @return true si existe, false si no
+     */
+    public boolean archivoExiste() {
+        return conexionSerializable.archivoExiste();
     }
 }

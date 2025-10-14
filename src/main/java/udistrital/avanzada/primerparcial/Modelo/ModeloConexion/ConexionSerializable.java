@@ -29,31 +29,24 @@ public class ConexionSerializable implements IConexionSobrescribible {
 
     //Archivo fuente
     private File archivo;
+    
+    private static final ConexionSerializable instancia = new ConexionSerializable();
 
     /**
      * Contructor ConexionSerializable vacio
      *
      */
-    public ConexionSerializable() {
+    private ConexionSerializable() {
         this.fileIn = null;
         this.fileOut = null;
         this.entrada = null;
         this.salida = null;
         this.archivo = null;
     }
-
-    /**
-     * Contructor ConexionSerializable con parametro de archivo
-     *
-     * @param archivo archivo con extension bin
-     */
-    public ConexionSerializable(File archivo) {
-        this.fileIn = null;
-        this.fileOut = null;
-        this.entrada = null;
-        this.salida = null;
-        this.archivo = archivo;
-    }
+    
+    public static ConexionSerializable getInstancia() {
+        return instancia;
+    }    
 
     /**
      * Metodo para conectar a los canales de salida y entrada
@@ -144,5 +137,19 @@ public class ConexionSerializable implements IConexionSobrescribible {
             //Propagacion para que lo maneje capa control
             throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
+    }
+    
+    /**
+     * Metodo para saber si archivo serializado existe
+     * 
+     * @return true si existe, false si no
+     */
+    public boolean archivoExiste() {
+        try {
+            return archivo.exists() && archivo.isFile();
+        } catch (Exception e) {
+            // Si hay excepcion es que no exite
+            return false;
+        }        
     }
 }
