@@ -34,7 +34,7 @@ public class ConexionBD implements IConexion {
     private static Connection conexion;
 
     // Propiedades de configuración de la conexión.
-    private static final String CONFIG_PATH = "src/data/database.properties";
+    private static final String CONFIG_PATH = "specs/data/database.properties";
 
     // Datos de conexión leídos desde el archivo de propiedades.
     private String url;
@@ -112,5 +112,3 @@ public class ConexionBD implements IConexion {
         }
     }
 }
-
-
