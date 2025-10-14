@@ -12,6 +12,6 @@ package udistrital.avanzada.primerparcial.Modelo;
  */
 public class Config {
     public static final String RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES = "specs/data/mascotas.bin";
-    public static final String RUTA_CARPETA_PRECARGA = "specs/data";
+    public static final String RUTA_CARPETA_PRECARGA = "specs/data/configuracion.properties";
     public static final String RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES = "specs/data/mascotas.data";
 }

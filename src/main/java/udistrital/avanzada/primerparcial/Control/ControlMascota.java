@@ -1,10 +1,15 @@
 package udistrital.avanzada.primerparcial.Control;
 
 import java.util.ArrayList;
+import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionProperties;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperties;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
+import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 
 /**
@@ -72,5 +77,24 @@ public class ControlMascota {
     public boolean insertarMascota(MascotaVO mascota) {        
         boolean res = mascotaDAO.insertarMascota(mascota);
         return res;
+    }
+    /**
+     * Carga las mascotas desde el archivo .properties y las inserta en la base de datos.
+     */
+    public void cargarDesdeProperties() {
+        try {
+            IConexionProperties conexion = new ConexionProperties();
+            PropertiesDAO propertiesDAO = new PropertiesDAO(conexion);
+            GestorArchivoProperties gestor = new GestorArchivoProperties(propertiesDAO);
+
+            List<MascotaVO> listaMascotas = gestor.cargarMascotasDesdeProperties();
+
+            // Insertar cada mascota leída desde el archivo
+            for (MascotaVO mascota : listaMascotas) {
+                mascotaDAO.insertarMascota(mascota);
+            }
+
+        } catch (Exception e) {
+        }
     }
 }

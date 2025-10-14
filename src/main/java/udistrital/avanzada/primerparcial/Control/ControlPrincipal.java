@@ -3,8 +3,12 @@ package udistrital.avanzada.primerparcial.Control;
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.Config;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionProperties;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperties;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
 /**
@@ -43,7 +47,7 @@ public class ControlPrincipal {
     public ControlPrincipal() {
         this.serializableDAO = new SerializableDAO();
         this.controlMascota = new ControlMascota();
-
+        controlMascota.cargarDesdeProperties();
         this.vista = new VentanaPrincipal();
         this.controlVentana = new ControlVentana(vista, this);
 
@@ -51,17 +55,22 @@ public class ControlPrincipal {
     }
 
     
-    // Inicializa el flujo de la aplicación verificando la existencia del archivo serializado.
-     
+    // Inicializa el flujo de la aplicación verificando la existencia del archivo serializado y properties.
+    
     private void inicializar() {
         File archivoSerializado = new File(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
-
-        if (archivoSerializado.exists()) {
-            // Si ya existe, se solicita al usuario seleccionar un archivo
-            controlVentana.obtenerArchivoSerializado(Config.RUTA_CARPETA_PRECARGA);
-        } else {
-            serializableDAO.setArchivo(archivoSerializado);
-        }
+        File archivoProperties = new File(Config.RUTA_CARPETA_PRECARGA);
+        
+        if (archivoProperties.exists()) {
+        // Si existe el archivo de propiedades, se cargan las mascotas desde allí
+        controlMascota.cargarDesdeProperties();
+    } else if (archivoSerializado.exists()) {
+        // Si no existe el properties pero sí el archivo serializado, se usa ese
+        controlVentana.obtenerArchivoSerializado(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
+    } else {
+        // Si no hay ninguno, se crea un nuevo archivo serializado vacío
+        serializableDAO.setArchivo(archivoSerializado);
+    }
 
         vista.setVisible(true);
         vista.mostrarPanel(VentanaPrincipal.PANEL_COMPLETAR);
@@ -90,7 +99,6 @@ public class ControlPrincipal {
         }
     }
 
-    
     // Guarda los datos antes de salir de la aplicación.
     
     public void salir() {
