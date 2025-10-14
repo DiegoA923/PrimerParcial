@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionSerializable;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionSerializable;
 
 /**
  * Clase DAO para serializar y deserializar lista de mascotas
@@ -15,9 +16,9 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionSerializa
  * @version 1.0
  * @since 2025-10-10
  */
-public class SerializableDAO {
+public class SerializableDAO implements ISerializableDAO {
 
-    private ConexionSerializable conexionSerializable;
+    private IConexionSerializable conexionSerializable;
 
     public SerializableDAO() {
         this.conexionSerializable = ConexionSerializable.getInstancia();
@@ -28,6 +29,7 @@ public class SerializableDAO {
      *
      * @return un ArrayList de MascotaVO
      */
+    @Override
     public ArrayList<MascotaVO> listaDeMascotas() {
         ArrayList<MascotaVO> mascotas = null;
         ObjectInputStream entrada = null;
@@ -53,6 +55,7 @@ public class SerializableDAO {
      *
      * @param mascotas lista de mascotas a serializar
      */
+    @Override
     public void guardar(ArrayList<MascotaVO> mascotas) {
         ObjectOutputStream salida = null;
         conexionSerializable.conectarSobrescribible();
@@ -75,6 +78,7 @@ public class SerializableDAO {
      *
      * @param archivo archivo con extension .bin
      */
+    @Override
     public void setArchivo(File archivo) {
         this.conexionSerializable.setArchivo(archivo);
     }
@@ -84,6 +88,7 @@ public class SerializableDAO {
      * 
      * @return true si existe, false si no
      */
+    @Override
     public boolean archivoExiste() {
         return conexionSerializable.archivoExiste();
     }

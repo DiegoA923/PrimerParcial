@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionAleatorio;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionAleatorio;
 
 /**
  * Clase DAO
@@ -14,9 +15,9 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionAleatorio
  * @author Mauricio
  * @since 2025-10-12
  */
-public class AleatorioDAO {
+public class AleatorioDAO implements IAleatorioDAO {
 
-    private ConexionAleatorio conexion;
+    private IConexionAleatorio conexion;
 
     
     public AleatorioDAO() {
@@ -29,6 +30,7 @@ public class AleatorioDAO {
      *
      * @param mascota MascotaVO
      */
+    @Override
     public void insertarMascota(MascotaVO mascota) {
         try {
             conexion.conectar();
@@ -55,6 +57,7 @@ public class AleatorioDAO {
      *
      * @return RandomAccessFile con la lista de mascotas
      */
+    @Override
     public RandomAccessFile listaDeMascotas() {
         RandomAccessFile raf = null;
         try {
@@ -72,7 +75,7 @@ public class AleatorioDAO {
      * @param raf RandomAccessFile de donde se escribe
      * @param texto Texto a escribir
      * @param longitud Limite de caracteres permitidos
-     */
+     */    
     private void escribirCampo(RandomAccessFile raf, String texto, int longitud) {
         // Limitamos la cantidad de caracteres para escribir correctamente
         String valor = String.format("%-" + longitud + "s", texto);
@@ -89,6 +92,7 @@ public class AleatorioDAO {
      * 
      * @param ruta 
      */
+    @Override
     public void setArchivoAleatorio(String ruta) {
         // Conexion asigna la ruta
         this.conexion.setRuta(ruta);
@@ -96,7 +100,7 @@ public class AleatorioDAO {
     
     
     // Metodo para cerrar conexion de archivo
-     
+    @Override
     public void desconectar() {
         // lo maneja la conexion directamente
         conexion.desconectar();
