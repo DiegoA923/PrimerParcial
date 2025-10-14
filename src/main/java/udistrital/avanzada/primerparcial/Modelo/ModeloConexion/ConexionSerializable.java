@@ -14,9 +14,10 @@ import java.io.ObjectOutputStream;
  * se le pase
  *
  * @author Mauricio
- * @since 10/10/2025
+ * @since 2025-10-10
  */
-//TODO que la clase implemente la interfaz IConexion
+
+// Implementa IConexionSobrescribible para manejar conexiones con opción de sobrescritura.
 public class ConexionSerializable implements IConexionSobrescribible {
 
     //Canal de salida para escribir en el archivo de serializacion
@@ -32,10 +33,9 @@ public class ConexionSerializable implements IConexionSobrescribible {
     
     private static final ConexionSerializable instancia = new ConexionSerializable();
 
-    /**
-     * Contructor ConexionSerializable vacio
-     *
-     */
+    
+    // Contructor ConexionSerializable vacio
+
     private ConexionSerializable() {
         this.fileIn = null;
         this.fileOut = null;
@@ -48,10 +48,10 @@ public class ConexionSerializable implements IConexionSobrescribible {
         return instancia;
     }    
 
-    /**
-     * Metodo para conectar a los canales de salida y entrada
-     *
-     */
+    
+    // Metodo para conectar a los canales de salida y entrada
+    
+    
     public void conectar() {
         try {
             //Para escribir            
@@ -72,10 +72,8 @@ public class ConexionSerializable implements IConexionSobrescribible {
         }
     }
 
-    /**
-     * Metodo para cerrar la conexion con los canales
-     *
-     */
+    
+    // Metodo para cerrar la conexion con los canales
     public void desconectar() {
         //Intetamos cerrar cada Stream
         try {
@@ -117,10 +115,9 @@ public class ConexionSerializable implements IConexionSobrescribible {
         this.archivo = archivo;
     }
 
-    /**
-     * Metodo para conectar de forma que se sobrescriba el archivo serializado
-     *
-     */
+    
+    // Metodo para conectar de forma que se sobrescriba el archivo serializado
+   
     @Override
     public void conectarSobrescribible() {
         try {

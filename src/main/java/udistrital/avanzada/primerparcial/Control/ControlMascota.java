@@ -1,4 +1,4 @@
-package udistrital.avanzada.primerparcial.Control.ControlDAO;
+package udistrital.avanzada.primerparcial.Control;
 
 import java.util.ArrayList;
 import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
@@ -9,22 +9,27 @@ import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 
 /**
  * Clase ControlMascota.
- * <p>
- * Descripción: [Agrega aquí la descripción de la clase].
+* <p>
+ * Controlador encargado de gestionar las operaciones relacionadas con las
+ * mascotas dentro del sistema. Actúa como intermediario entre la vista o el
+ * controlador principal y la capa de acceso a datos ({@link MascotaDAO}),
+ * aplicando el patrón DAO.
  * </p>
- *
- * @author diego
+ * <p>
+ * Permite realizar operaciones de inserción y consulta de mascotas en la base
+ * de datos, usando objetos del tipo {@link MascotaVO} y las entidades
+ * auxiliares {@link Clasificacion} y {@link TipoAlimento}.
+ * </p>
+ * @author Diego
  * @version 1.0
+ * @since 2025-10-12
  */
 public class ControlMascota {
 
     private MascotaDAO mascotaDAO;
 
-    /**
-     * Constructor
-     */
     public ControlMascota() {
-        //Solo la clase DAO deberia instanciar la conexion?
+
         //Inicializar el atributo mascotaDAO
         this.mascotaDAO = new MascotaDAO(ConexionBD.getInstancia());
     }

@@ -10,7 +10,7 @@ import java.io.*;
  * lo cual puede corromper el archivo y hacer que no se pueda leer correctamente.
  * 
  * @author Mauricio
- * @since 11/10/2025
+ * @since 2025-10-11
  */
 
 public class AppendableObjectOutputStream extends ObjectOutputStream {

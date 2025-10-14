@@ -5,7 +5,7 @@ package udistrital.avanzada.primerparcial.Modelo.ModeloDAO;
  * aletorios que requieren tamaños fijos para su operacion
  * 
  * @author Mauricio
- * @since 12/10/2025
+ * @since 2025-10-12
  */
 
 public class LongitudesMascota {

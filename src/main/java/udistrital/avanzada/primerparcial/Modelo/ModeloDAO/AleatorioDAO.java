@@ -12,15 +12,13 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionAleatorio
  * aleatorio
  *
  * @author Mauricio
- * @since 12/10/2025
+ * @since 2025-10-12
  */
 public class AleatorioDAO {
 
     private ConexionAleatorio conexion;
+
     
-    /**
-     * Constructor    
-     */
     public AleatorioDAO() {
         //Obtenemos la instancia de la conexion
         this.conexion = ConexionAleatorio.getInstancia();
@@ -96,9 +94,9 @@ public class AleatorioDAO {
         this.conexion.setRuta(ruta);
     }
     
-    /**
-     * Metodo para cerrar conexion de archivo
-     */
+    
+    // Metodo para cerrar conexion de archivo
+     
     public void desconectar() {
         // lo maneja la conexion directamente
         conexion.desconectar();

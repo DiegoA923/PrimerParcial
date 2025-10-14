@@ -8,7 +8,7 @@ import java.io.RandomAccessFile;
  * Clase que gestiona la conexión a un archivo de acceso aleatorio
  *
  * @author Mauricio
- * @since 11/10/2025
+ * @since 2025-10-11
  */
 public class ConexionAleatorio {
 
@@ -22,7 +22,7 @@ public class ConexionAleatorio {
     }
 
     /**
-     * Metodo para obterne la unica instancia en la aplicacion
+     * Metodo para obtener la unica instancia en la aplicacion
      *
      * @return ConexionAletorio
      */
@@ -30,9 +30,9 @@ public class ConexionAleatorio {
         return instancia;
     }
 
-    /**
-     * Conectar al archivo aleatorio
-     */
+    
+    // Conectar al archivo aleatorio
+     
     public void conectar() {
         try {
             archivo = new RandomAccessFile(ruta, "rw");
@@ -42,9 +42,9 @@ public class ConexionAleatorio {
         }
     }
 
-    /**
-     * Desconectar del archivo aleatorio
-     */
+    
+    // Desconectar del archivo aleatorio
+     
     public void desconectar() {
         try {
             archivo.close();
@@ -67,11 +67,9 @@ public class ConexionAleatorio {
         this.ruta = ruta;
     }
 
-    /**
-     * Obtener archivo de trabajo despues de llamar metodo conectar
-     *
-     * @return
-     */
+    
+    // Obtener archivo de trabajo despues de llamar metodo conectar
+    
     public RandomAccessFile getArchivo() {
         return archivo;
     }

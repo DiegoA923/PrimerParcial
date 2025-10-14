@@ -1,8 +1,8 @@
-package udistrital.avanzada.primerparcial.Vista;
+package udistrital.avanzada.primerparcial.Vista.paneles;
 
 
 /**
- * Clase VentanaInicial.
+ * Clase PanelModificar.
  * <p>
  * Descripción: [Agrega aquí la descripción de la clase].
  * </p>
@@ -10,7 +10,7 @@ package udistrital.avanzada.primerparcial.Vista;
  * @author diego
  * @version 1.0
  */
-public class VentanaInicial {
+public class PanelModificar {
 
 }
 

@@ -15,7 +15,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.LongitudesMascota;
  * usa la calse AleatorioDAO para sus operaciones según corresponda
  * 
  * @author Mauricio
- * @since 12/10/2025
+ * @since 2025-10-12
  */
 public class GestorArchivoAleatorio {
 

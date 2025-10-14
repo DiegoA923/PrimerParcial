@@ -4,8 +4,7 @@ package udistrital.avanzada.primerparcial.Modelo;
  * Clase abstracta que representa un animal genérico dentro del sistema.
  * <p>
  * Esta clase sirve como superclase para las mascotas exóticas y define las
- * características comunes que todas comparten. Se usa para aplicar el principio
- * de sustitución de Liskov (LSP).
+ * características comunes que todas comparten.
  * </p>
  *
  * @author mauricio

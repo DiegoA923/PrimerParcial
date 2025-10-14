@@ -1,97 +1,124 @@
 package udistrital.avanzada.primerparcial.Control;
 
+import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import java.io.File;
 import java.util.ArrayList;
-import udistrital.avanzada.primerparcial.Control.ControlDAO.ControlMascota;
 import udistrital.avanzada.primerparcial.Modelo.Config;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
-import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.AleatorioDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
 /**
  * Clase ControlPrincipal.
  * <p>
- * Descripción: [Agrega aquí la descripción de la clase].
+ * Controla el flujo general del programa desde el arranque, coordinando la
+ * lógica del sistema, la interfaz gráfica y la persistencia de datos. Crea la
+ * vista principal y delega los eventos generales a {@link ControlVentana}.
  * </p>
  *
- * @author diego
- * @version 1.0
+ * @author Diego
+ * @version 1.1
+ * @since 2025-10-13
+ *
+ * <p>
+ * <b>Modificación:</b> Se integró la inicialización de los componentes de
+ * lógica ({@link ControlMascota}, {@link SerializableDAO}) y la creación de la
+ * ventana principal. Además, se añadió la gestión del archivo serializado y
+ * aleatorio para mantener la persistencia de las mascotas.
+ * </p>
  */
 public class ControlPrincipal {
 
-    private ControlVentana cVentana;
-    private SerializableDAO serializableDAO;
-    private ControlMascota cMascota;
+    private final VentanaPrincipal vista;
+    private final ControlVentana controlVentana;
+    private final SerializableDAO serializableDAO;
+    private final ControlMascota controlMascota;
 
+    /**
+     * Constructor principal del controlador general.
+     * <p>
+     * Inicializa la lógica del sistema, la vista principal y gestiona la carga
+     * o creación del archivo serializado de mascotas.
+     * </p>
+     */
     public ControlPrincipal() {
         this.serializableDAO = new SerializableDAO();
-        this.cMascota = new ControlMascota();
-        this.cVentana = new ControlVentana(this);
+        this.controlMascota = new ControlMascota();
 
-        // Verificar si el archivo serializado exite para saber si estamos en la
-        // segunda ejecucion del programa
+        this.vista = new VentanaPrincipal();
+        this.controlVentana = new ControlVentana(vista, this);
+
+        inicializar();
+    }
+
+    
+    // Inicializa el flujo de la aplicación verificando la existencia del archivo serializado.
+     
+    private void inicializar() {
         File archivoSerializado = new File(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
-        // Si exite pedirle al usuario que eliga un archivo serializado        
-        // Si no configurar la conexion con el archivo en la ruta predeterminada
+
         if (archivoSerializado.exists()) {
-            // TODO Cambiar para Llamar a metodo de menu de seleccion de archivos
-            cVentana.obtenerArchivoSerializado(Config.RUTA_CARPETA_PRECARGA);
+            // Si ya existe, se solicita al usuario seleccionar un archivo
+            controlVentana.obtenerArchivoSerializado(Config.RUTA_CARPETA_PRECARGA);
         } else {
             serializableDAO.setArchivo(archivoSerializado);
         }
+
+        vista.setVisible(true);
+        vista.mostrarPanel(VentanaPrincipal.PANEL_COMPLETAR);
     }
 
+    /**
+     * Procesa el archivo serializado seleccionado por el usuario.
+     *
+     * @param archivo archivo serializado a procesar
+     */
     public void procesarArchivoSerializado(File archivo) {
         serializableDAO.setArchivo(archivo);
     }
 
-    /**
-     * Metodo para cargar las mascotas desde archivo serializado y subirlos a la
-     * base de datos
-     */
+    
+    // Carga las mascotas desde el archivo serializado y las inserta en la base de datos.
+   
     public void insertarDatosDesdeSerializador() {
         try {
-            // Obtenemos mascotas a guaradar
             ArrayList<MascotaVO> mascotas = serializableDAO.listaDeMascotas();
-            // Las guardamos en BD
             for (MascotaVO mascota : mascotas) {
-                cMascota.insertarMascota(mascota);
+                controlMascota.insertarMascota(mascota);
             }
         } catch (RuntimeException e) {
-
+            // Manejo de error opcional (log o mensaje)
         }
     }
 
-    /**
-     * Metodo llamado antes de salir de la aplicacion
-     */
+    
+    // Guarda los datos antes de salir de la aplicación.
+    
     public void salir() {
-        // Macotas a guardar
-        ArrayList<MascotaVO> mascotas = null;
-        // Obtener lista actualizada
+        ArrayList<MascotaVO> mascotas;
+
         try {
-            mascotas = cMascota.obtenerMascotas();
+            mascotas = controlMascota.obtenerMascotas();
         } catch (RuntimeException e) {
-        }
-        // No hay mascotas no se guarda nada
-        if (mascotas == null) {            
             return;
         }
-        // Guardar mascotas en archivo serializado
+
+        if (mascotas == null || mascotas.isEmpty()) {
+            return;
+        }
+
         try {
             serializableDAO.guardar(mascotas);
         } catch (RuntimeException e) {
-
+            // Log o manejo de error
         }
-        //Guardar lo traido desde la base datos en el archivo aleatorio    
-        //Instanciamos clase gestor de archivo aleatorio
-        GestorArchivoAleatorio gaa = new GestorArchivoAleatorio();        
-        //Asignamos la ruta del archivo con el que vamos a trabajar
-        gaa.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
+
+        // Persistir los datos en archivo aleatorio
+        GestorArchivoAleatorio gestor = new GestorArchivoAleatorio();
+        gestor.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
         try {
-            //Escribimos para cada mascota
-            gaa.insertarMascotas(mascotas);
+            gestor.insertarMascotas(mascotas);
         } catch (RuntimeException e) {
-        }        
+            // Log o manejo de error
+        }
     }
 }

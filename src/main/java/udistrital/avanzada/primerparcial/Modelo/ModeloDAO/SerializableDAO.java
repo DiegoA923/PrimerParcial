@@ -12,7 +12,8 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionSerializa
  * Clase DAO para serializar y deserializar lista de mascotas
  *
  * @author Mauricio
- * @10/10/2025
+ * @version 1.0
+ * @since 2025-10-10
  */
 public class SerializableDAO {
 
