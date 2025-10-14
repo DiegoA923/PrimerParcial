@@ -13,26 +13,26 @@ import java.util.Properties;
  * </p>
  * <p>
  * Esta clase se encarga únicamente de la lectura del archivo,
- * delegando el procesamiento de los datos a la capa de Control.
+ * delegando el procesamiento de los datos a la capa DAO o Control.
  * </p>
  *
  * @author sebas
- * @version 1.0
+ * @version 1.1
  * @since 2025-10-10
  */
 public class ConexionProperties implements IConexionProperties {
-    
+
     /** Ruta del archivo de propiedades */
     private String rutaArchivo;
-    
+
     /**
      * Constructor por defecto.
      * Inicializa la ruta del archivo properties en la carpeta data.
      */
     public ConexionProperties() {
-        this.rutaArchivo = "data/mascotas.properties";
+        this.rutaArchivo = "specs/data/configuracion.properties";
     }
-    
+
     /**
      * Constructor con ruta personalizada.
      *
@@ -41,23 +41,23 @@ public class ConexionProperties implements IConexionProperties {
     public ConexionProperties(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Properties cargarProperties() throws Exception {
         Properties properties = new Properties();
-        
+
         try (FileInputStream fis = new FileInputStream(rutaArchivo)) {
             properties.load(fis);
         } catch (IOException e) {
             throw new Exception("Error al cargar el archivo de propiedades: " + e.getMessage(), e);
         }
-        
+
         return properties;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -65,7 +65,7 @@ public class ConexionProperties implements IConexionProperties {
     public String getRutaArchivo() {
         return rutaArchivo;
     }
-    
+
     /**
      * Establece la ruta del archivo de propiedades.
      *

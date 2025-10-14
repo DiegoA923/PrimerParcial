@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.primerparcial.Modelo.ModeloDAO;
 
 import java.util.Properties;
@@ -14,40 +10,28 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperti
  * Aplica el patrón DAO para encapsular el acceso a la fuente de datos (archivo properties).
  * </p>
  * <p>
- * Responsabilidad única: Obtener el objeto Properties desde la conexión.
- * NO realiza procesamiento de datos ni ciclos. Esa responsabilidad es del Control.
+ * Responsabilidad única: obtener el objeto {@link Properties} desde la conexión.
+ * No realiza procesamiento de datos ni iteraciones; esa responsabilidad 
+ * corresponde a la capa de Control.
  * </p>
  *
  * @author sebas
- * @version 2.0
+ * @version 2.1
  * @since 2025-10-11
  */
 public class PropertiesDAO {
 
-    /**
-     * Interfaz de conexión al archivo properties, inyectada desde el exterior.
-     */
     private final IConexionProperties conexionProperties;
 
-    /**
-     * Constructor con inyección de dependencias.
-     *
-     * @param conexionProperties objeto que implementa {@link IConexionProperties}
-     *                          y gestiona el acceso al archivo
-     */
     public PropertiesDAO(IConexionProperties conexionProperties) {
         this.conexionProperties = conexionProperties;
     }
 
     /**
-     * Obtiene el objeto Properties desde el archivo.
+     * Obtiene el objeto {@link Properties} desde el archivo.
      * <p>
-     * Este método únicamente delega la lectura del archivo a la conexión
+     * Este método delega la lectura del archivo a la clase de conexión
      * y retorna el objeto Properties sin procesarlo.
-     * </p>
-     * <p>
-     * La responsabilidad de iterar, parsear y validar los datos
-     * corresponde a la capa de Control.
      * </p>
      *
      * @return objeto {@link Properties} con los datos del archivo
