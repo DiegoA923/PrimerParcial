@@ -23,9 +23,9 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexion;
  */
 public class MascotaDAO {
 
-    /**
-     * Interfaz de conexión a la base de datos, inyectada desde el exterior.
-     */
+    
+    // Interfaz de conexión a la base de datos, inyectada desde el exterior.
+     
     private final IConexion conexion;
 
     /**
@@ -57,13 +57,13 @@ public class MascotaDAO {
      */
     public boolean insertarMascota(MascotaVO mascota) {
         String verificarSql = """
-            SELECT COUNT(*) FROM Mascotas 
+            SELECT COUNT(*) FROM mascotas 
             WHERE nombreComun = ? AND apodo = ? AND clasificacion = ? 
             AND familia = ? AND genero = ? AND especie = ? AND tipoAlimento = ?
             """;
 
         String insertarSql = """
-            INSERT INTO Mascotas (nombreComun, apodo, clasificacion, familia, genero, especie, tipoAlimento)
+            INSERT INTO mascotas (nombreComun, apodo, clasificacion, familia, genero, especie, tipoAlimento)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
@@ -118,7 +118,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> listaDeMascotas() {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM Mascotas";
+        String sql = "SELECT * FROM mascotas";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -159,7 +159,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> consultarPorApodo(String apodo) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM Mascotas WHERE apodo LIKE ?";
+        String sql = "SELECT * FROM mascotas WHERE apodo LIKE ?";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -207,7 +207,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> consultarPorClasificacion(Clasificacion clasificacion) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM Mascotas WHERE clasificacion = ?";
+        String sql = "SELECT * FROM mascotas WHERE clasificacion = ?";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -252,7 +252,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> consultarPorFamilia(String familia) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM Mascotas WHERE LOWER(familia) LIKE LOWER(?)";
+        String sql = "SELECT * FROM mascotas WHERE LOWER(familia) LIKE LOWER(?)";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -298,7 +298,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> consultarPorTipoAlimento(TipoAlimento tipoAlimento) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM Mascotas WHERE tipoAlimento = ?";
+        String sql = "SELECT * FROM mascotas WHERE tipoAlimento = ?";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -342,7 +342,7 @@ public class MascotaDAO {
      * @throws RuntimeException si ocurre un error al ejecutar la eliminación
      */
     public boolean eliminarMascota(int id) {
-        String sql = "DELETE FROM Mascotas WHERE id = ?";
+        String sql = "DELETE FROM mascotas WHERE id = ?";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -376,7 +376,7 @@ public class MascotaDAO {
      */
     public boolean modificarMascota(MascotaVO mascota) {
         String sql = """
-            UPDATE Mascotas
+            UPDATE mascotas
             SET nombreComun = ?, apodo = ?, clasificacion = ?, tipoAlimento = ?
             WHERE id = ?
             """;

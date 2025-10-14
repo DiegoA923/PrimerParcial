@@ -27,18 +27,18 @@ import udistrital.avanzada.primerparcial.Vista.paneles.PanelCompletarDatos;
  */
 public class ControlCompletarDatos implements ActionListener {
 
-    // ───────── Atributos ─────────
-    private final VentanaPrincipal ventana;
+    // Atributos
+    private final VentanaPrincipal vista;
     private final PanelCompletarDatos panel;
 
     /**
      * Constructor del controlador.
      *
-     * @param ventana referencia a la ventana principal de la aplicación
+     * @param vista referencia a la ventana principal de la aplicación
      * @param panel panel asociado al proceso de completar datos
      */
-    public ControlCompletarDatos(VentanaPrincipal ventana, PanelCompletarDatos panel) {
-        this.ventana = ventana;
+    public ControlCompletarDatos(VentanaPrincipal vista, PanelCompletarDatos panel) {
+        this.vista = vista;
         this.panel = panel;
 
         // Registro de eventos: solo un listener central
@@ -56,7 +56,6 @@ public class ControlCompletarDatos implements ActionListener {
 
         // Identifica el comando del botón
         switch (comando.toLowerCase()) {
-            case "guardar cambios":
             case "guardar":
                 guardarCambios();
                 break;
@@ -75,13 +74,13 @@ public class ControlCompletarDatos implements ActionListener {
      */
     private void guardarCambios() {
         JOptionPane.showMessageDialog(
-                ventana,
+                vista,
                 "Datos de la mascota guardados correctamente.",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE
         );
 
         // Cambia al panel de menú principal
-        ventana.mostrarPanel(VentanaPrincipal.PANEL_MENU);
+        vista.mostrarPanel(VentanaPrincipal.PANEL_MENU);
     }
 }

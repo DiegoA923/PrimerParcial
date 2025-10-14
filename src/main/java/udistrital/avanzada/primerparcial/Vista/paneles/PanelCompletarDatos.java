@@ -14,24 +14,13 @@ import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
  * PanelCompletarDatos.
  * <p>
  * Permite completar los datos faltantes de las mascotas exóticas. Utiliza el
- * encabezado general de {@link PanelBaseSeccion} (con título y subtítulo) y
- * muestra un título adicional centrado sobre el formulario, que puede variar
- * según la sección (por ejemplo “Datos de la Mascota Seleccionada” o “Nueva
- * Mascota”).
- * </p>
- *
- * <p>
- * Estructura visual:
- * <ul>
- * <li>Encabezado superior común: “Mascotas Exóticas / Completar datos
- * faltantes”.</li>
- * <li>Centro: lista lateral + formulario en tarjeta blanca.</li>
- * <li>Título secundario encima del formulario, fuera de la tarjeta.</li>
- * </ul>
+ * encabezado general de {@link PanelBaseSeccion} y un formulario reutilizable
+ * de {@link PanelFormularioMascota}.
  * </p>
  *
  * @author Diego
  * @version 1.0
+ * @since 2025-10-13
  */
 public class PanelCompletarDatos extends PanelBaseSeccion {
 
@@ -108,13 +97,13 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
         panelBoton.setOpaque(false);
         panelBoton.add(btnGuardar);
 
-        // --- Título encima del formulario ---
+        // Título encima del formulario
         lblTituloFormulario = new JLabel(tituloFormulario, SwingConstants.CENTER);
         lblTituloFormulario.setFont(TemaVisual.FUENTE_TITULO.deriveFont(Font.BOLD, 18f));
         lblTituloFormulario.setForeground(TemaVisual.PRIMARIO_OSCURO);
         lblTituloFormulario.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
 
-        // --- Tarjeta con fondo blanco y bordes redondeados ---
+        // Tarjeta con fondo blanco y bordes redondeados
         JPanel tarjeta = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -149,7 +138,7 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
         contenedorDerecha.add(lblTituloFormulario, BorderLayout.NORTH);
         contenedorDerecha.add(wrapperTarjeta, BorderLayout.CENTER);
 
-        // --- Split principal ---
+        // Split principal 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollLista, contenedorDerecha);
         splitPane.setDividerLocation(280);
         splitPane.setDividerSize(5);
@@ -165,9 +154,7 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
         return splitPane;
     }
 
-    /**
-     * Simula la carga de datos de una mascota seleccionada.
-     */
+    // Simula la carga de datos de una mascota seleccionada.
     private void simularCargaDeDatos() {
         int index = listaMascotas.getSelectedIndex();
         if (index < 0) {
@@ -191,9 +178,7 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
         comboAlimento.setEnabled(alterno);
     }
 
-    /**
-     * Configura visualmente un campo editable o bloqueado.
-     */
+    // Configura visualmente un campo editable o bloqueado.
     private void configurarCampo(
             udistrital.avanzada.primerparcial.Vista.componentes.CampoTextoConEtiqueta campo,
             String valor,
@@ -204,9 +189,10 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
         campo.setHighlighted(editable);
     }
 
-    // ------------------------------------------------------------
-    //                 MÉTODOS DE ACCESO
-    // ------------------------------------------------------------
+    /**
+     * Métodos de acceso a los principales componentes visuales del panel,
+     * permitiendo su manipulación desde el controlador.
+     */
     public JButton getBtnGuardar() {
         return btnGuardar;
     }

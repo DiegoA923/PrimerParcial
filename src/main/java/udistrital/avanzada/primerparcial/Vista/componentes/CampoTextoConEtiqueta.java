@@ -44,16 +44,16 @@ public class CampoTextoConEtiqueta extends JPanel {
         add(campo, BorderLayout.CENTER);
     }
 
-    /**
-     * Devuelve el JTextField interno.
-     */
+    
+    // Devuelve el JTextField interno.
+     
     public JTextField getCampo() {
         return campo;
     }
 
-    /**
-     * Alias para compatibilidad.
-     */
+    
+    // Alias para compatibilidad.
+     
     public JTextField getCampoTexto() {
         return campo;
     }
@@ -96,9 +96,9 @@ public class CampoTextoConEtiqueta extends JPanel {
         etiqueta.setMaximumSize(d);
     }
 
-    /**
-     * Fija el tamaño preferido del campo de texto (JTextField).
-     */
+    
+    // Fija el tamaño preferido del campo de texto (JTextField).
+     
     public void setFieldPreferredSize(Dimension d) {
         campo.setPreferredSize(d);
         campo.setMinimumSize(d);

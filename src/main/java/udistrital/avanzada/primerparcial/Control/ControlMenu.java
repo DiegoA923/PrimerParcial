@@ -18,44 +18,44 @@ import javax.swing.*;
  */
 public class ControlMenu {
 
-    private final VentanaPrincipal ventana;
+    private final VentanaPrincipal vista;
     private final PanelMenu panel;
 
     /**
      * Constructor del controlador.
      *
-     * @param ventana ventana principal de la aplicación
+     * @param vista ventana principal de la aplicación
      * @param panel panel de menú asociado
      */
-    public ControlMenu(VentanaPrincipal ventana, PanelMenu panel) {
-        this.ventana = ventana;
+    public ControlMenu(VentanaPrincipal vista, PanelMenu panel) {
+        this.vista = vista;
         this.panel = panel;
         registrarEventos();
     }
 
-    /**
-     * Registra los eventos de los botones del menú principal.
-     */
+    
+    // Registra los eventos de los botones del menú principal.
+     
     private void registrarEventos() {
-        panel.getBtnInsertar().addActionListener(e -> ventana.mostrarPanel(VentanaPrincipal.PANEL_INSERTAR));
+        panel.getBtnInsertar().addActionListener(e -> vista.mostrarPanel(VentanaPrincipal.PANEL_INSERTAR));
 
         panel.getBtnModificar().addActionListener(e
-                -> JOptionPane.showMessageDialog(ventana, "Función modificar próximamente disponible.")
+                -> JOptionPane.showMessageDialog(vista, "Función modificar próximamente disponible.")
         );
 
         panel.getBtnEliminar().addActionListener(e
-                -> JOptionPane.showMessageDialog(ventana, "Función eliminar próximamente disponible.")
+                -> JOptionPane.showMessageDialog(vista, "Función eliminar próximamente disponible.")
         );
 
         panel.getBtnSalir().addActionListener(e -> salirAplicacion());
     }
 
-    /**
-     * Cierra la aplicación con confirmación.
-     */
+    
+    // Cierra la aplicación con confirmación.
+     
     private void salirAplicacion() {
         int opcion = JOptionPane.showConfirmDialog(
-                ventana,
+                vista,
                 "¿Deseas salir del sistema?",
                 "Confirmación",
                 JOptionPane.YES_NO_OPTION,

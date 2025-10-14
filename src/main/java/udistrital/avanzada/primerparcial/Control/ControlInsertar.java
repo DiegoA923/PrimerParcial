@@ -23,22 +23,22 @@ import udistrital.avanzada.primerparcial.Vista.componentes.PanelFormularioMascot
  * </p>
  *
  * @author Diego
- * @version 3.0
- * @since 2025-10-16
+ * @version 1.0
+ * @since 2025-10-13
  */
 public class ControlInsertar implements ActionListener {
 
-    private final VentanaPrincipal ventana;
+    private final VentanaPrincipal vista;
     private final PanelInsertar panel;
 
     /**
      * Constructor del controlador.
      *
-     * @param ventana ventana principal de la aplicación
+     * @param vista ventana principal de la aplicación
      * @param panel panel de inserción asociado
      */
-    public ControlInsertar(VentanaPrincipal ventana, PanelInsertar panel) {
-        this.ventana = ventana;
+    public ControlInsertar(VentanaPrincipal vista, PanelInsertar panel) {
+        this.vista = vista;
         this.panel = panel;
 
         // Registro de eventos
@@ -66,17 +66,14 @@ public class ControlInsertar implements ActionListener {
                 break;
 
             case "inicio":
-                ventana.mostrarPanel(VentanaPrincipal.PANEL_MENU);
+                vista.mostrarPanel(VentanaPrincipal.PANEL_MENU);
                 break;
 
             default:
                 System.out.println("[ControlInsertar] Acción no reconocida: " + comando);
         }
     }
-
-    // ╔════════════════════════════════════════════════════════╗
-    // ║                    MÉTODOS AUXILIARES                  ║
-    // ╚════════════════════════════════════════════════════════╝
+    
     /**
      * Simula el registro de una nueva mascota.
      * <p>
@@ -87,19 +84,19 @@ public class ControlInsertar implements ActionListener {
      */
     private void guardarMascota() {
         JOptionPane.showMessageDialog(
-                ventana,
+                vista,
                 "Mascota registrada correctamente (simulado).",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE
         );
 
         // Regresa al menú principal
-        ventana.mostrarPanel(VentanaPrincipal.PANEL_MENU);
+        vista.mostrarPanel(VentanaPrincipal.PANEL_MENU);
     }
 
-    /**
-     * Limpia todos los campos del formulario de inserción.
-     */
+    
+    // Limpia todos los campos del formulario de inserción.
+     
     private void limpiarCampos() {
         PanelFormularioMascota form = panel.getPanelFormulario();
 

@@ -11,16 +11,16 @@ import udistrital.avanzada.primerparcial.Vista.componentes.*;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
 
 /**
- * PanelMenu (v7.5)
+ * PanelMenu.
  * <p>
- * Panel principal con tabla de mascotas (consulta integrada), búsqueda/filtrado
- * inteligente y barra inferior de acciones (Insertar, Modificar, Eliminar,
- * Serializar, Salir). El aspecto toma los colores desde {@link TemaVisual}.
+ * Vista principal que muestra la tabla de mascotas exóticas con búsqueda,
+ * filtrado y barra inferior de acciones (Insertar, Modificar, Eliminar, Salir).
+ * Utiliza colores y estilos definidos en {@link TemaVisual}.
  * </p>
  *
  * @author Diego
  * @version 1.0
- * @since 2025-10-15
+ * @since 2025-10-13
  */
 public class PanelMenu extends JPanel {
 
@@ -147,9 +147,7 @@ public class PanelMenu extends JPanel {
         return caja;
     }
 
-    /**
-     * Crea y configura la tabla que muestra las mascotas.
-     */
+    //  Crea y configura la tabla que muestra las mascotas.
     private JComponent crearPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
@@ -204,9 +202,7 @@ public class PanelMenu extends JPanel {
         return panel;
     }
 
-    /**
-     * Crea la barra inferior con acciones principales.
-     */
+    // Crea la barra inferior con acciones principales.
     private JComponent crearBarraInferior() {
         JPanel barra = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 10));
         barra.setBackground(TemaVisual.PANEL_IZQUIERDO_BG);
@@ -230,10 +226,7 @@ public class PanelMenu extends JPanel {
         return barra;
     }
 
-    // ---------------- Funcionalidad de datos / filtrado ----------------
-    /**
-     * Cambia el tipo de entrada (texto <-> enum) según el filtro seleccionado.
-     */
+    //Cambia el tipo de entrada (texto <-> enum) según el filtro seleccionado.
     private void cambiarTipoEntrada() {
         String filtro = (String) comboFiltro.getSelectedItem();
         boolean esEnum = "Clasificación".equals(filtro) || "Tipo de alimento".equals(filtro);
@@ -257,9 +250,7 @@ public class PanelMenu extends JPanel {
         repaint();
     }
 
-    /**
-     * Carga datos de ejemplo (temporal) para mostrar en la tabla.
-     */
+    // Carga datos de ejemplo (temporal) para mostrar en la tabla.
     private void cargarMascotasEjemplo() {
         mascotas = List.of(
                 new MascotaVO(1, "Draco", "Iguana verde", Clasificacion.REPTIL, "Iguanidae", "Iguana", "Iguana iguana", TipoAlimento.VERDURAS),
@@ -287,9 +278,7 @@ public class PanelMenu extends JPanel {
         }
     }
 
-    /**
-     * Filtra la lista de mascotas en memoria según el criterio seleccionado.
-     */
+    //  Filtra la lista de mascotas en memoria según el criterio seleccionado.
     private void filtrarMascotas() {
         String filtro = (String) comboFiltro.getSelectedItem();
         if (filtro == null) {
@@ -320,7 +309,13 @@ public class PanelMenu extends JPanel {
         refrescarTabla(filtradas);
     }
 
-    // ---------------- Getters para controladores ----------------
+    /**
+     * Métodos de acceso a los botones, tabla y filtros del panel.
+     * <p>
+     * Permiten al controlador vincular eventos y actualizar los datos
+     * mostrados.
+     * </p>
+     */
     public JButton getBtnInsertar() {
         return btnInsertar;
     }

@@ -1,8 +1,9 @@
 package udistrital.avanzada.primerparcial.Vista;
 
 import java.awt.*;
+import java.io.File;
 import javax.swing.*;
-import udistrital.avanzada.primerparcial.Control.ControlVentana;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelCompletarDatos;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelInsertar;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelMenu;
@@ -14,23 +15,25 @@ import udistrital.avanzada.primerparcial.Vista.paneles.PanelMenu;
  * un {@link CardLayout} y actúa como punto de entrada del módulo visual.
  * </p>
  *
- * <p>
- * Implementa el patrón MVC en conjunto con {@link ControlVentana}. Los paneles
- * se definen como constantes estáticas para facilitar su acceso.
- * </p>
- *
  * @author Diego
- * @version 1.1
+ * @version 1.2
  * @since 2025-10-13
+ * 
+ * <p>
+ * <b>Modificación:</b> Se integró el método {@code getFileChoser(...)} proveniente
+ * de la rama <i>develop</i> para permitir la selección de archivos dentro de la
+ * interfaz, manteniendo la estructura original basada en {@code JFrame} y
+ * el manejo de paneles con {@code CardLayout}.
+ * </p>
  */
 public class VentanaPrincipal extends JFrame {
 
-    // ───────── Constantes de nombres de paneles ─────────
+    // Constantes de nombres de paneles
     public static final String PANEL_MENU = "PANEL_MENU";
     public static final String PANEL_COMPLETAR = "PANEL_COMPLETAR";
     public static final String PANEL_INSERTAR = "PANEL_INSERTAR";
 
-    // ───────── Atributos de vista ─────────
+    // Atributos de vista
     private final CardLayout cardLayout;
     private final JPanel panelContenedor;
 
@@ -38,24 +41,24 @@ public class VentanaPrincipal extends JFrame {
     private final PanelCompletarDatos panelCompletarDatos;
     private final PanelInsertar panelInsertar;
 
-    /**
-     * Constructor de la clase VentanaPrincipal.
-     */
+    
+    // Constructor de la clase VentanaPrincipal.
+    
     public VentanaPrincipal() {
         super("Mascotas Exóticas - Gestión");
 
-        // ───────── Configuración base de la ventana ─────────
+        // Configuración base de la ventana
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(950, 650);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // ───────── CardLayout ─────────
+        // CardLayout
         cardLayout = new CardLayout();
         panelContenedor = new JPanel(cardLayout);
         panelContenedor.setBackground(Color.WHITE);
 
-        // ───────── Instanciación de paneles ─────────
+        // Instanciación de paneles
         panelMenu = new PanelMenu();
         panelCompletarDatos = new PanelCompletarDatos(
                 "Completar Datos Faltantes",
@@ -63,7 +66,7 @@ public class VentanaPrincipal extends JFrame {
         );
         panelInsertar = new PanelInsertar();
 
-        // ───────── Registro de paneles ─────────
+        // Registro de paneles
         panelContenedor.add(panelMenu, PANEL_MENU);
         panelContenedor.add(panelCompletarDatos, PANEL_COMPLETAR);
         panelContenedor.add(panelInsertar, PANEL_INSERTAR);
@@ -80,7 +83,7 @@ public class VentanaPrincipal extends JFrame {
         cardLayout.show(panelContenedor, key);
     }
 
-    // ───────── Getters para el controlador ─────────
+    // Getters para el controlador
     public PanelMenu getPanelMenu() {
         return panelMenu;
     }
@@ -91,5 +94,25 @@ public class VentanaPrincipal extends JFrame {
 
     public PanelInsertar getPanelInsertar() {
         return panelInsertar;
+    }
+
+    /**
+     * Muestra una ventana de selección de archivo personalizada.
+     *
+     * @param descripcion descripción del tipo de archivo a mostrar
+     * @param extension extensión de archivo aceptada (sin punto)
+     * @param modoSeleccion tipo de selección (por ejemplo,
+     * {@link JFileChooser#FILES_ONLY})
+     * @param rutaPredeterminada carpeta inicial donde abrir el explorador
+     * @return instancia configurada de {@link JFileChooser}
+     */
+    public JFileChooser getFileChoser(String descripcion, String extension, int modoSeleccion, String rutaPredeterminada) {
+        JFileChooser fileChooser = new JFileChooser();
+        File carpetaInicial = new File(rutaPredeterminada);
+        fileChooser.setCurrentDirectory(carpetaInicial);
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(descripcion, extension);
+        fileChooser.setFileFilter(filtro);
+        fileChooser.setFileSelectionMode(modoSeleccion);
+        return fileChooser;
     }
 }

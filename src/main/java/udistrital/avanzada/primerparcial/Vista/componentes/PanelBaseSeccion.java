@@ -5,21 +5,33 @@ import java.awt.*;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
 
 /**
- * PanelBaseSeccion.
+ * Clase {@code PanelBaseSeccion}.
  * <p>
- * Plantilla visual común para todas las secciones de la app.
- * Incluye encabezado con huella, título principal y subtítulo dinámico,
- * además de un contenedor central intercambiable.
+ * Componente base que define la estructura visual común de todas las secciones
+ * de la aplicación. Proporciona un encabezado con ícono, título principal y
+ * subtítulo dinámico, junto con un contenedor central intercambiable donde
+ * pueden insertarse otros paneles específicos.
  * </p>
  *
  * @author Diego
  * @version 1.0
+ * @since 2025-10-13
  */
 public class PanelBaseSeccion extends JPanel {
 
     private JLabel lblSubtitulo;
     private JPanel contenedorCentral;
 
+    /**
+     * Constructor de la clase {@code PanelBaseSeccion}.
+     * <p>
+     * Inicializa el panel base con el color de fondo definido en
+     * {@link TemaVisual}, agrega el encabezado superior y el contenedor central
+     * vacío.
+     * </p>
+     *
+     * @param subtitulo texto que se mostrará como subtítulo en el encabezado
+     */
     public PanelBaseSeccion(String subtitulo) {
         setLayout(new BorderLayout());
         setBackground(TemaVisual.FONDO);
@@ -29,7 +41,11 @@ public class PanelBaseSeccion extends JPanel {
     }
 
     /**
-     * Crea el encabezado común (huellita + títulos).
+     * Crea el encabezado común de la sección, que incluye un ícono decorativo,
+     * el título principal de la aplicación y el subtítulo dinámico.
+     *
+     * @param subtitulo texto inicial del subtítulo mostrado
+     * @return panel configurado que representa el encabezado
      */
     private JPanel crearEncabezado(String subtitulo) {
         JPanel header = new JPanel() {
@@ -71,7 +87,11 @@ public class PanelBaseSeccion extends JPanel {
     }
 
     /**
-     * Crea un contenedor central que luego otros paneles pueden reemplazar.
+     * Crea el panel central vacío, destinado a contener los componentes
+     * específicos de cada sección. Este contenedor puede ser reemplazado
+     * dinámicamente con {@link #setContenidoCentral(JComponent)}.
+     *
+     * @return panel central vacío
      */
     private JPanel crearContenedorCentral() {
         contenedorCentral = new JPanel(new BorderLayout());
@@ -80,8 +100,13 @@ public class PanelBaseSeccion extends JPanel {
     }
 
     /**
-     * Permite establecer el contenido del área central.
-     * @param componente
+     * Establece el contenido del área central del panel.
+     * <p>
+     * Reemplaza cualquier componente anterior con el nuevo elemento indicado,
+     * actualizando la vista de forma inmediata.
+     * </p>
+     *
+     * @param componente componente Swing que se insertará en el área central
      */
     public void setContenidoCentral(JComponent componente) {
         contenedorCentral.removeAll();
@@ -91,14 +116,20 @@ public class PanelBaseSeccion extends JPanel {
     }
 
     /**
-     * Cambia el subtítulo dinámicamente.
-     * @param texto
+     * Cambia dinámicamente el texto del subtítulo mostrado en el encabezado.
+     *
+     * @param texto nuevo texto a mostrar como subtítulo
      */
     public void setSubtitulo(String texto) {
         lblSubtitulo.setText(texto);
     }
 
-    public JLabel getLblSubtitulo() { return lblSubtitulo; }
+    /**
+     * Obtiene la referencia al {@link JLabel} que muestra el subtítulo.
+     *
+     * @return etiqueta que contiene el subtítulo actual
+     */
+    public JLabel getLblSubtitulo() {
+        return lblSubtitulo;
+    }
 }
-
-

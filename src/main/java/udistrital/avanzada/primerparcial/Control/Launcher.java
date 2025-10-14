@@ -12,7 +12,6 @@ package udistrital.avanzada.primerparcial.Control;
  * @since 2025-10-11
  */
 public class Launcher {
-
     /**
      * Método principal del programa.
      * <p>
@@ -22,6 +21,7 @@ public class Launcher {
      *
      * @param args argumentos de línea de comandos (no utilizados)
      */
+
     public static void main(String[] args) {
         new ControlPrincipal();
     }

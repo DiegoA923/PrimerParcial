@@ -7,25 +7,25 @@ import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
 
 /**
- * PanelFormularioMascota.
+ * Clase {@code PanelFormularioMascota}.
  * <p>
- * Panel reutilizable con los campos básicos de una mascota exótica. Se usa en
- * Insertar, Modificar y CompletarDatos, garantizando una apariencia y
- * alineación uniforme en toda la aplicación.
+ * Panel reutilizable que contiene los campos de entrada y selección básicos
+ * para registrar o editar una mascota exótica. Se utiliza en diferentes vistas
+ * como <i>Insertar</i>, <i>Modificar</i> y <i>Completar Datos</i>, manteniendo
+ * una apariencia uniforme y coherente en toda la aplicación.
  * </p>
  *
  * <p>
- * Incluye:
- * <ul>
- * <li>Campos de texto con etiquetas personalizadas.</li>
- * <li>Combos desplegables para {@link Clasificacion} y
- * {@link TipoAlimento}.</li>
- * <li>Alineación central y espaciado vertical uniforme.</li>
- * </ul>
+ * Incluye campos de texto personalizados mediante
+ * {@link CampoTextoConEtiqueta}, así como listas desplegables para las
+ * enumeraciones {@link Clasificacion} y {@link TipoAlimento}. Los componentes
+ * se distribuyen verticalmente con espaciado uniforme y estilo visual definido
+ * por {@link TemaVisual}.
  * </p>
  *
  * @author Diego
  * @version 1.0
+ * @since 2025-10-13
  */
 public class PanelFormularioMascota extends JPanel {
 
@@ -40,8 +40,8 @@ public class PanelFormularioMascota extends JPanel {
     /**
      * Constructor principal.
      * <p>
-     * Define el diseño del formulario y aplica espaciado coherente entre todos
-     * los campos.
+     * Configura el diseño vertical del formulario, crea los campos de texto y
+     * combos desplegables, y aplica espaciado coherente entre componentes.
      * </p>
      */
     public PanelFormularioMascota() {
@@ -93,7 +93,13 @@ public class PanelFormularioMascota extends JPanel {
     }
 
     /**
-     * Crea una fila con etiqueta y combo alineados horizontalmente.
+     * Crea una fila con una etiqueta y un combo desplegable alineados
+     * horizontalmente.
+     *
+     * @param texto texto de la etiqueta
+     * @param combo componente desplegable asociado
+     * @param anchoEtiqueta ancho fijo de la etiqueta
+     * @return panel configurado que contiene ambos elementos
      */
     private JPanel crearFilaCombo(String texto, JComboBox<?> combo, int anchoEtiqueta) {
         JPanel fila = new JPanel(new BorderLayout(8, 0));
@@ -113,9 +119,14 @@ public class PanelFormularioMascota extends JPanel {
         return fila;
     }
 
-    // -----------------------------------------------------------
-    //                 MÉTODOS DE ACCESO
-    // -----------------------------------------------------------
+    /**
+     * Métodos de acceso para obtener los campos y combos del formulario.
+     * <p>
+     * Se proporcionan getters para cada componente (campos de texto y listas
+     * desplegables) que permiten recuperar o modificar sus valores desde la
+     * capa de control.
+     * </p>
+     */
     public CampoTextoConEtiqueta getCampoNombre() {
         return campoNombre;
     }

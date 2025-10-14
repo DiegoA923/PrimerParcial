@@ -21,11 +21,11 @@ import javax.swing.*;
  *
  * @author Diego
  * @version 1.0
- * @since 2025-10-15
+ * @since 2025-10-13
  */
 public class TemaVisual {
 
-    // Cambia aquí el tema (usar valores: "océano", "selva", "tierra", "sakura")
+    // Para cambiar de tema usar valores: océano, selva, tierra, sakura
     private static final String TEMA = "océano";
 
     // Colores principales (expuestos para que todas las vistas los utilicen)
@@ -52,7 +52,7 @@ public class TemaVisual {
     static {
         switch (TEMA.toLowerCase()) {
 
-            // ----------------- SELVA -----------------
+            // SELVA
             case "selva":
                 FONDO = new Color(0xEAF2E3);
                 ENCABEZADO = new Color(0x4F704F);
@@ -69,7 +69,7 @@ public class TemaVisual {
                 PANEL_LISTA_BG = new Color(0xEDF7EA);
                 break;
 
-            // ----------------- OCÉANO (por defecto) -----------------
+            // OCÉANO (por defecto)
             case "océano":
             default:
                 FONDO = new Color(0xE6F3F8);
@@ -87,7 +87,7 @@ public class TemaVisual {
                 PANEL_LISTA_BG = new Color(0xE1F2FA);
                 break;
 
-            // ----------------- TIERRA -----------------
+            // TIERRA
             case "tierra":
                 FONDO = new Color(0xF3EDE0);
                 ENCABEZADO = new Color(0x8B6F47);
@@ -104,7 +104,7 @@ public class TemaVisual {
                 PANEL_LISTA_BG = new Color(0xEFE4D1);
                 break;
 
-            // ----------------- SAKURA -----------------
+            // SAKURA 
             case "sakura":
                 FONDO = new Color(0xFFF8FA);
                 ENCABEZADO = new Color(0xEAB5C9);

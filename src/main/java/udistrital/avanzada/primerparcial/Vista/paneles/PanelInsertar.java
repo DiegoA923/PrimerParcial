@@ -8,15 +8,16 @@ import udistrital.avanzada.primerparcial.Vista.componentes.*;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
 
 /**
- * PanelInsertar (v3.2)
+ * PanelInsertar
  * <p>
- * Panel de registro de una nueva mascota exótica, con formulario desplazable
- * verticalmente y barra de scroll personalizada con efecto hover.
+ * Vista dedicada al registro de una nueva mascota exótica. Extiende
+ * {@link PanelBaseSeccion} e integra un formulario desplazable con barra de
+ * scroll personalizada, además de una barra inferior con botones de acción.
  * </p>
  *
  * @author Diego
- * @version 3.2
- * @since 2025-10-16
+ * @version 1.0
+ * @since 2025-10-13
  */
 public class PanelInsertar extends PanelBaseSeccion {
 
@@ -26,11 +27,24 @@ public class PanelInsertar extends PanelBaseSeccion {
     private BotonPersonalizado btnLimpiar;
     private BotonPersonalizado btnInicio;
 
+    /**
+     * Constructor principal.
+     * <p>
+     * Inicializa el panel de inserción con el subtítulo predefinido y configura
+     * todos los componentes gráficos.
+     * </p>
+     */
     public PanelInsertar() {
         super("Registro de nueva mascota exótica");
         inicializar();
     }
 
+    /**
+     * Inicializa la estructura principal del panel.
+     * <p>
+     * Agrega la zona central (formulario) y la barra inferior (botones).
+     * </p>
+     */
     private void inicializar() {
         JPanel contenedorPrincipal = new JPanel(new BorderLayout());
         contenedorPrincipal.setOpaque(false);
@@ -42,8 +56,13 @@ public class PanelInsertar extends PanelBaseSeccion {
     }
 
     /**
-     * Crea la zona central (título + tarjeta blanca con formulario
-     * desplazable).
+     * Crea la zona central del panel.
+     * <p>
+     * Contiene el título superior y una tarjeta blanca con el formulario
+     * desplazable dentro de un {@link JScrollPane}.
+     * </p>
+     *
+     * @return componente que representa la sección central del panel
      */
     private JComponent crearZonaCentral() {
         lblTituloFormulario = new JLabel("Registrar Nueva Mascota", SwingConstants.CENTER);
@@ -95,7 +114,13 @@ public class PanelInsertar extends PanelBaseSeccion {
     }
 
     /**
-     * Crea la barra inferior con los botones de acción principales.
+     * Crea la barra inferior del panel.
+     * <p>
+     * Incluye los botones principales de acción: Guardar, Limpiar e Inicio.
+     * Aplica estilo visual coherente con {@link TemaVisual}.
+     * </p>
+     *
+     * @return componente con los botones de acción
      */
     private JComponent crearBarraInferior() {
         JPanel barra = new JPanel(new FlowLayout(FlowLayout.CENTER, 18, 12));
@@ -122,7 +147,14 @@ public class PanelInsertar extends PanelBaseSeccion {
     }
 
     /**
-     * Crea un JScrollPane con estilo visual personalizado y efecto hover.
+     * Crea un {@link JScrollPane} con estilo personalizado.
+     * <p>
+     * Define un diseño minimalista con una barra de desplazamiento vertical que
+     * cambia de color al pasar el cursor (efecto hover).
+     * </p>
+     *
+     * @param contenido componente que se mostrará dentro del área desplazable
+     * @return {@link JScrollPane} estilizado
      */
     private JScrollPane crearScrollFormulario(JComponent contenido) {
         JScrollPane scroll = new JScrollPane(contenido);
@@ -198,7 +230,13 @@ public class PanelInsertar extends PanelBaseSeccion {
         return scroll;
     }
 
-    // Getters
+    /**
+     * Métodos de acceso a los componentes principales del panel.
+     * <p>
+     * Permiten al controlador interactuar con los botones y el formulario (por
+     * ejemplo, para manejar eventos o recuperar datos del usuario).
+     * </p>
+     */
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
