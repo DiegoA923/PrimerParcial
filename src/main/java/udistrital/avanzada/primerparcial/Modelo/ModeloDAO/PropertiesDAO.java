@@ -19,7 +19,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperti
  * @version 2.1
  * @since 2025-10-11
  */
-public class PropertiesDAO {
+public class PropertiesDAO implements IPropertiesDAO {
 
     private final IConexionProperties conexionProperties;
 
