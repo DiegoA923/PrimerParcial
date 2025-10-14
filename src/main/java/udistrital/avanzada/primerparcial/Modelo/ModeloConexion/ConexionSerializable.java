@@ -14,9 +14,10 @@ import java.io.ObjectOutputStream;
  * se le pase
  *
  * @author Mauricio
- * @since 10/10/2025
+ * @since 2025-10-10
  */
-//TODO que la clase implemente la interfaz IConexion
+
+// Implementa IConexionSobrescribible para manejar conexiones con opción de sobrescritura.
 public class ConexionSerializable implements IConexionSobrescribible {
 
     //Canal de salida para escribir en el archivo de serializacion
@@ -29,36 +30,28 @@ public class ConexionSerializable implements IConexionSobrescribible {
 
     //Archivo fuente
     private File archivo;
+    
+    private static final ConexionSerializable instancia = new ConexionSerializable();
 
-    /**
-     * Contructor ConexionSerializable vacio
-     *
-     */
-    public ConexionSerializable() {
+    
+    // Contructor ConexionSerializable vacio
+
+    private ConexionSerializable() {
         this.fileIn = null;
         this.fileOut = null;
         this.entrada = null;
         this.salida = null;
         this.archivo = null;
     }
+    
+    public static ConexionSerializable getInstancia() {
+        return instancia;
+    }    
 
-    /**
-     * Contructor ConexionSerializable con parametro de archivo
-     *
-     * @param archivo archivo con extension bin
-     */
-    public ConexionSerializable(File archivo) {
-        this.fileIn = null;
-        this.fileOut = null;
-        this.entrada = null;
-        this.salida = null;
-        this.archivo = archivo;
-    }
-
-    /**
-     * Metodo para conectar a los canales de salida y entrada
-     *
-     */
+    
+    // Metodo para conectar a los canales de salida y entrada
+    
+    
     public void conectar() {
         try {
             //Para escribir            
@@ -79,10 +72,8 @@ public class ConexionSerializable implements IConexionSobrescribible {
         }
     }
 
-    /**
-     * Metodo para cerrar la conexion con los canales
-     *
-     */
+    
+    // Metodo para cerrar la conexion con los canales
     public void desconectar() {
         //Intetamos cerrar cada Stream
         try {
@@ -124,10 +115,9 @@ public class ConexionSerializable implements IConexionSobrescribible {
         this.archivo = archivo;
     }
 
-    /**
-     * Metodo para conectar de forma que se sobrescriba el archivo serializado
-     *
-     */
+    
+    // Metodo para conectar de forma que se sobrescriba el archivo serializado
+   
     @Override
     public void conectarSobrescribible() {
         try {
@@ -144,5 +134,19 @@ public class ConexionSerializable implements IConexionSobrescribible {
             //Propagacion para que lo maneje capa control
             throw new RuntimeException("Entrada/salida no puenden configurarse: " + ex.getMessage(), ex);
         }
+    }
+    
+    /**
+     * Metodo para saber si archivo serializado existe
+     * 
+     * @return true si existe, false si no
+     */
+    public boolean archivoExiste() {
+        try {
+            return archivo.exists() && archivo.isFile();
+        } catch (Exception e) {
+            // Si hay excepcion es que no exite
+            return false;
+        }        
     }
 }

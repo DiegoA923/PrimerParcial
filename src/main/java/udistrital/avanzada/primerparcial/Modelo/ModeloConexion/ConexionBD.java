@@ -20,27 +20,23 @@ import java.util.Properties;
  * lo que permite modificar la conexión sin alterar el código fuente.
  * </p>
  *
- * <p>
- * Las clases DAO no dependen directamente de esta clase, sino de la interfaz {@link IConexion},
- * promoviendo el principio de inversión de dependencias (D de SOLID).
- * </p>
  *
  * @author Diego
- * @version 1.1
+ * @version 1.0
  * @since 2025-10-10
  */
 public class ConexionBD implements IConexion {
 
-    /** Instancia única de la clase ConexionBD (patrón Singleton). */
+    // Instancia única de la clase ConexionBD (patrón Singleton).
     private static ConexionBD instancia;
 
-    /** Objeto Connection activo que representa la conexión a la base de datos. */
+    // Objeto Connection activo que representa la conexión a la base de datos.
     private static Connection conexion;
 
-    /** Propiedades de configuración de la conexión. */
+    // Propiedades de configuración de la conexión.
     private static final String CONFIG_PATH = "src/data/database.properties";
 
-    /** Datos de conexión leídos desde el archivo de propiedades. */
+    // Datos de conexión leídos desde el archivo de propiedades.
     private String url;
     private String user;
     private String password;

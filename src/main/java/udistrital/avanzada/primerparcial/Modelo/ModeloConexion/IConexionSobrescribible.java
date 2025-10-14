@@ -9,7 +9,7 @@ package udistrital.avanzada.primerparcial.Modelo.ModeloConexion;
  * 
  * 
  * @author Mauricio
- * @since 11/10/2025
+ * @since 2025-11-10
  */
 public interface IConexionSobrescribible {
     void conectarSobrescribible();

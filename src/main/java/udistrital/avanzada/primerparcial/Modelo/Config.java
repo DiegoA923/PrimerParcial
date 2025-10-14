@@ -7,9 +7,11 @@ package udistrital.avanzada.primerparcial.Modelo;
  * como la ubicación de archivos de datos serializados.
  * 
  * @author Mauricio
- * @since 11/10/2025
+ * @version 1.0
+ * @since 2025-10-11
  */
 public class Config {
     public static final String RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES = "specs/data/mascotas.bin";
     public static final String RUTA_CARPETA_PRECARGA = "specs/data";
+    public static final String RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES = "specs/data/mascotas.data";
 }
