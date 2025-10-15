@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IMascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
@@ -36,7 +37,7 @@ public class ControlInsertar implements ActionListener {
 
     private final VentanaPrincipal vista;
     private final PanelInsertar panel;
-    private final MascotaDAO mascotaDAO;
+    private final IMascotaDAO mascotaDAO;
 
     /**
      * Constructor del controlador.
