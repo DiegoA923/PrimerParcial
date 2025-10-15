@@ -15,15 +15,6 @@ import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
  * del tema.
  * </p>
  *
- * <p>
- * Estructura visual:
- * <ul>
- * <li>Título dinámico: “Modificar Mascota - (Apodo / ID)”.</li>
- * <li>Formulario completo dentro de una tarjeta blanca.</li>
- * <li>Botones de acción: “Guardar cambios” y “Cancelar”.</li>
- * </ul>
- * </p>
- *
  * @author Diego
  * @version 2.2
  * @since 2025-10-14
@@ -31,23 +22,20 @@ import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
 public class PanelModificar extends PanelBaseSeccion {
 
     private PanelFormularioMascota panelFormulario;
+    private JLabel lblTituloFormulario;
     private BotonPersonalizado btnGuardarCambios;
     private BotonPersonalizado btnCancelar;
 
     // Mascota actualmente cargada en el formulario
     private MascotaVO mascotaActual;
 
-    /**
-     * Constructor principal.
-     */
     public PanelModificar() {
         super("Modificar datos de mascota");
         inicializar();
     }
 
-    /**
-     * Configura la estructura del panel.
-     */
+    
+    // Configura la estructura del panel.  
     private void inicializar() {
         JPanel contenedorPrincipal = new JPanel(new BorderLayout());
         contenedorPrincipal.setOpaque(false);
@@ -58,10 +46,14 @@ public class PanelModificar extends PanelBaseSeccion {
         setContenidoCentral(contenedorPrincipal);
     }
 
-    /**
-     * Crea la zona central con el formulario dentro de una tarjeta decorada.
-     */
+    
+    // Crea la zona central con el formulario dentro de una tarjeta decorada.
     private JComponent crearZonaCentral() {
+        lblTituloFormulario = new JLabel("Registrar Nueva Mascota", SwingConstants.CENTER);
+        lblTituloFormulario.setFont(TemaVisual.FUENTE_TITULO.deriveFont(Font.BOLD, 18f));
+        lblTituloFormulario.setForeground(TemaVisual.PRIMARIO_OSCURO);
+        lblTituloFormulario.setBorder(BorderFactory.createEmptyBorder(10, 0, 15, 0));
+
         panelFormulario = new PanelFormularioMascota();
 
         JPanel tarjeta = new JPanel() {
@@ -84,22 +76,29 @@ public class PanelModificar extends PanelBaseSeccion {
         tarjeta.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         tarjeta.add(panelFormulario, BorderLayout.CENTER);
 
-        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        wrapper.setOpaque(false);
-        wrapper.add(tarjeta);
+        JPanel wrapperTarjeta = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        wrapperTarjeta.setOpaque(false);
+        wrapperTarjeta.add(tarjeta);
 
-        return wrapper;
+        JPanel contenedor = new JPanel(new BorderLayout());
+        contenedor.setOpaque(false);
+        contenedor.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        contenedor.add(lblTituloFormulario, BorderLayout.NORTH);
+        contenedor.add(wrapperTarjeta, BorderLayout.CENTER);
+
+        return contenedor;
     }
 
-    /**
-     * Crea la zona inferior con botones de acción.
-     */
+    
+    // Crea la zona inferior con botones de acción.
+     
     private JComponent crearZonaInferior() {
         JPanel barra = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 12));
         barra.setBackground(TemaVisual.PANEL_IZQUIERDO_BG);
         barra.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, TemaVisual.PRIMARIO_OSCURO));
 
-        btnGuardarCambios = new BotonPersonalizado("Guardar cambios",
+        btnGuardarCambios = new BotonPersonalizado("Guardar Cambios",
                 TemaVisual.BOTON_FONDO,
                 TemaVisual.BOTON_HOVER,
                 TemaVisual.BOTON_TEXTO);
@@ -108,6 +107,9 @@ public class PanelModificar extends PanelBaseSeccion {
                 TemaVisual.PRIMARIO_OSCURO,
                 TemaVisual.BOTON_HOVER,
                 TemaVisual.BOTON_TEXTO);
+
+        btnGuardarCambios.setActionCommand("guardarcambios");
+        btnCancelar.setActionCommand("cancelar");
 
         Dimension dBtn = new Dimension(160, 38);
         btnGuardarCambios.setPreferredSize(dBtn);
@@ -119,9 +121,6 @@ public class PanelModificar extends PanelBaseSeccion {
         return barra;
     }
 
-    // ------------------------------------------------------------
-    // Métodos públicos
-    // ------------------------------------------------------------
     /**
      * Carga los datos de una mascota seleccionada desde el PanelMenu.
      * <p>
@@ -158,9 +157,6 @@ public class PanelModificar extends PanelBaseSeccion {
         return editada;
     }
 
-    // ------------------------------------------------------------
-    // Getters para el Control
-    // ------------------------------------------------------------
     public JButton getBtnGuardarCambios() {
         return btnGuardarCambios;
     }

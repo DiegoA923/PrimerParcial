@@ -16,7 +16,7 @@ import java.util.Properties;
  * delegando el procesamiento de los datos a la capa DAO o Control.
  * </p>
  *
- * @author sebas
+ * @author Sebas
  * @version 1.1
  * @since 2025-10-10
  */

@@ -19,6 +19,9 @@ public class MascotaVO extends Animal {
     private int id;
     private String apodo;
 
+    // clave en configuracion.properties
+    private String claveProperties;
+
     /**
      * Constructor vacío de la clase MascotaVO.
      * <p>
@@ -46,6 +49,29 @@ public class MascotaVO extends Animal {
         super(nombreComun, clasificacion, familia, genero, especie, tipoAlimento);
         this.id = id;
         this.apodo = apodo;
+    }
+
+    /**
+     * Verifica si la mascota tiene todos sus datos principales completos.
+     * <p>
+     * Este método no valida la coherencia de los datos, solo verifica que los
+     * campos obligatorios no estén vacíos o nulos.
+     * </p>
+     *
+     * @return {@code true} si todos los campos están completos; {@code false}
+     * en caso contrario
+     *
+     * @modification Diego - 2025-10-14: Añadido método de validación para
+     * verificar completitud de datos en la entidad MascotaVO.
+     */
+    public boolean tieneDatosCompletos() {
+        return nombreComun != null && !nombreComun.isBlank()
+                && apodo != null && !apodo.isBlank()
+                && familia != null && !familia.isBlank()
+                && genero != null && !genero.isBlank()
+                && especie != null && !especie.isBlank()
+                && clasificacion != null
+                && tipoAlimento != null;
     }
 
     /**
@@ -82,6 +108,14 @@ public class MascotaVO extends Animal {
      */
     public void setApodo(String apodo) {
         this.apodo = apodo;
+    }
+
+    public String getClaveProperties() {
+        return claveProperties;
+    } 
+
+    public void setClaveProperties(String claveProperties) {
+        this.claveProperties = claveProperties;
     }
 
 }
