@@ -116,7 +116,7 @@ public class PropertiesDAO implements IPropertiesDAO {
      */
     public void actualizarMascota(String clave, MascotaVO mascota) throws IOException {
         Properties props = cargarProperties();
-
+        
         String valor = String.join(",",
                 mascota.getNombreComun(),
                 mascota.getApodo(),

@@ -8,6 +8,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 
 import javax.swing.*;
 import java.util.List;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IMascotaDAO;
 
 /**
  * ControlMenu.
@@ -30,7 +31,7 @@ public class ControlMenu {
 
     private final VentanaPrincipal vista;
     private final PanelMenu panel;
-    private final MascotaDAO mascotaDAO;
+    private final IMascotaDAO mascotaDAO;
 
     /**
      * Constructor del controlador.

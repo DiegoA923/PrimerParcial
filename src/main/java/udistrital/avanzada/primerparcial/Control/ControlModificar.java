@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IMascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelModificar;
@@ -31,7 +32,7 @@ public class ControlModificar implements ActionListener {
 
     private final VentanaPrincipal vista;
     private final PanelModificar panel;
-    private final MascotaDAO mascotaDAO;
+    private final IMascotaDAO mascotaDAO;
 
     public ControlModificar(VentanaPrincipal vista, PanelModificar panel) {
         this.vista = vista;
