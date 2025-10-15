@@ -7,7 +7,6 @@ import udistrital.avanzada.primerparcial.Vista.paneles.PanelMenu;
 import udistrital.avanzada.primerparcial.Modelo.*;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
-
 import javax.swing.*;
 import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
@@ -36,6 +35,7 @@ public class ControlMenu {
     private final MascotaDAO mascotaDAO;
     private final GestorArchivoAleatorio gestorAleatorio;
     private final SerializableDAO serializableDAO;
+
 
     /**
      * Constructor del controlador.

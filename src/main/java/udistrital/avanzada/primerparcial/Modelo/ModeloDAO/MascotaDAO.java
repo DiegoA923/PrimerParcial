@@ -21,7 +21,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexion;
  * @version 1.0
  * @since 2025-10-10
  */
-public class MascotaDAO {
+public class MascotaDAO implements IMascotaDAO {
 
     // Interfaz de conexión a la base de datos, inyectada desde el exterior.
     private final IConexion conexion;
@@ -53,6 +53,7 @@ public class MascotaDAO {
      * existía
      * @throws RuntimeException si ocurre un error al ejecutar la consulta SQL
      */
+    @Override
     public boolean insertarMascota(MascotaVO mascota) {
         String verificarSql = """
             SELECT COUNT(*) FROM mascotas 
@@ -114,6 +115,7 @@ public class MascotaDAO {
      * mascota, o una lista vacía si no existen registros
      * @throws RuntimeException si ocurre un error al realizar la consulta
      */
+    @Override
     public ArrayList<MascotaVO> listaDeMascotas() {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
         String sql = "SELECT * FROM mascotas";
@@ -155,6 +157,7 @@ public class MascotaDAO {
      * dado, o una lista vacía si no se encuentran resultados
      * @throws RuntimeException si ocurre un error al realizar la consulta
      */
+    @Override
     public ArrayList<MascotaVO> consultarPorApodo(String apodo) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
         String sql = "SELECT * FROM mascotas WHERE apodo LIKE ?";
@@ -203,6 +206,7 @@ public class MascotaDAO {
      * @throws RuntimeException si ocurre un error durante la consulta a la base
      * de datos
      */
+    @Override
     public ArrayList<MascotaVO> consultarPorClasificacion(Clasificacion clasificacion) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
         String sql = "SELECT * FROM mascotas WHERE clasificacion = ?";
@@ -248,6 +252,7 @@ public class MascotaDAO {
      * indicada, o una lista vacía si no se encuentran coincidencias
      * @throws RuntimeException si ocurre un error al realizar la consulta
      */
+    @Override
     public ArrayList<MascotaVO> consultarPorFamilia(String familia) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
         String sql = "SELECT * FROM mascotas WHERE LOWER(familia) LIKE LOWER(?)";
@@ -294,6 +299,7 @@ public class MascotaDAO {
      * alimento, o una lista vacía si no se encuentran resultados
      * @throws RuntimeException si ocurre un error al ejecutar la consulta SQL
      */
+    @Override
     public ArrayList<MascotaVO> consultarPorTipoAlimento(TipoAlimento tipoAlimento) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
         String sql = "SELECT * FROM mascotas WHERE tipo_alimento = ?";
@@ -339,6 +345,7 @@ public class MascotaDAO {
      * existía el registro
      * @throws RuntimeException si ocurre un error al ejecutar la eliminación
      */
+    @Override
     public boolean eliminarMascota(int id) {
         String sql = "DELETE FROM mascotas WHERE id = ?";
 
@@ -372,6 +379,7 @@ public class MascotaDAO {
      * se encontró el registro
      * @throws RuntimeException si ocurre un error durante la actualización
      */
+    @Override
     public boolean modificarMascota(MascotaVO mascota) {
         String sql = """
             UPDATE mascotas
@@ -418,6 +426,7 @@ public class MascotaDAO {
      * {@code false} si no existe
      * @throws RuntimeException si ocurre un error durante la verificación
      */
+    @Override
     public boolean existeMascota(MascotaVO mascota) {
         String sql = """
             SELECT COUNT(*) FROM mascotas

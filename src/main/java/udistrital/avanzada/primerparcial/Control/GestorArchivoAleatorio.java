@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.AleatorioDAO;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IAleatorioDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.LongitudesMascota;
 
 /**
@@ -19,7 +20,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.LongitudesMascota;
  */
 public class GestorArchivoAleatorio {
 
-    private AleatorioDAO aleatorioDAO;
+    private IAleatorioDAO aleatorioDAO;
 
     public GestorArchivoAleatorio() {
         aleatorioDAO = new AleatorioDAO();

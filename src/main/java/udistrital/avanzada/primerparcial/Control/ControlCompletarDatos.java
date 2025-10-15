@@ -10,6 +10,7 @@ import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionProperties;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IMascotaDAO;
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelCompletarDatos;
 
@@ -30,7 +31,7 @@ public class ControlCompletarDatos implements ActionListener {
 
     private final VentanaPrincipal vista;
     private final PanelCompletarDatos panel;
-    private final MascotaDAO mascotaDAO;
+    private final IMascotaDAO mascotaDAO;
     private final List<MascotaVO> listaMascotas;
 
     /**
