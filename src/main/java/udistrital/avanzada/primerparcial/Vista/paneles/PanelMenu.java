@@ -200,6 +200,11 @@ public class PanelMenu extends JPanel {
         btnModificar = new BotonPersonalizado("Modificar", TemaVisual.BOTON_FONDO, TemaVisual.BOTON_HOVER, TemaVisual.BOTON_TEXTO);
         btnEliminar = new BotonPersonalizado("Eliminar", TemaVisual.BOTON_FONDO, TemaVisual.BOTON_HOVER, TemaVisual.BOTON_TEXTO);
         btnSalir = new BotonPersonalizado("Salir", TemaVisual.PRIMARIO_OSCURO, TemaVisual.BOTON_HOVER, TemaVisual.BOTON_TEXTO);
+        
+        btnInsertar.setActionCommand("insertar");
+        btnModificar.setActionCommand("modificar");
+        btnEliminar.setActionCommand("eliminar");
+        btnSalir.setActionCommand("salir");
 
         btnInsertar.setPreferredSize(new Dimension(120, 38));
         btnModificar.setPreferredSize(new Dimension(120, 38));

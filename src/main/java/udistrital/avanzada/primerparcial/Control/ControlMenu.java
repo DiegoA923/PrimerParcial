@@ -1,5 +1,7 @@
 package udistrital.avanzada.primerparcial.Control;
 
+import java.io.File;
+import java.util.ArrayList;
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelMenu;
 import udistrital.avanzada.primerparcial.Modelo.*;
@@ -8,6 +10,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 
 import javax.swing.*;
 import java.util.List;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
 /**
  * ControlMenu.
@@ -20,7 +23,7 @@ import java.util.List;
  * @author Diego
  * @version 3.0
  * @since 2025-10-14
- * 
+ *
  * <p>
  * <b>Modificacion:</b> Se agregaron las consultas específicas de búsqueda por
  * Apodo, Familia, Clasificación y Tipo de alimento.
@@ -31,17 +34,23 @@ public class ControlMenu {
     private final VentanaPrincipal vista;
     private final PanelMenu panel;
     private final MascotaDAO mascotaDAO;
+    private final GestorArchivoAleatorio gestorAleatorio;
+    private final SerializableDAO serializableDAO;
 
     /**
      * Constructor del controlador.
      *
      * @param vista ventana principal de la aplicación
      * @param panel panel de menú asociado
+     * @param gestorAleatorio
+     * @param serializableDAO
      */
-    public ControlMenu(VentanaPrincipal vista, PanelMenu panel) {
+    public ControlMenu(VentanaPrincipal vista, PanelMenu panel, GestorArchivoAleatorio gestorAleatorio, SerializableDAO serializableDAO) {
         this.vista = vista;
         this.panel = panel;
         this.mascotaDAO = new MascotaDAO(ConexionBD.getInstancia());
+        this.gestorAleatorio = gestorAleatorio;
+        this.serializableDAO = serializableDAO;
 
         registrarEventos();
         refrescarTabla();
@@ -146,10 +155,8 @@ public class ControlMenu {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
+
     // Elimina la mascota seleccionada de la base de datos (con confirmación).
-     
     private void eliminarMascota() {
         MascotaVO seleccionada = panel.getMascotaSeleccionada();
         if (seleccionada == null) {
@@ -179,9 +186,7 @@ public class ControlMenu {
         }
     }
 
-    
     // Carga todas las mascotas de la base de datos en la tabla del panel.
-     
     private void refrescarTabla() {
         try {
             List<MascotaVO> mascotas = mascotaDAO.listaDeMascotas();
@@ -191,10 +196,12 @@ public class ControlMenu {
         }
     }
 
-    
-    // Cierra la aplicación con confirmación del usuario.
-     
-    private void salirAplicacion() {
+    /**
+     * Muestra un cuadro de diálogo para que el usuario confirme si desea salir.
+     *
+     * @return true si el usuario confirma la salida, false en caso contrario
+     */
+    private boolean confirmarSalidaUsuario() {
         int opcion = JOptionPane.showConfirmDialog(
                 vista,
                 "¿Deseas salir del sistema?",
@@ -202,8 +209,79 @@ public class ControlMenu {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE
         );
-        if (opcion == JOptionPane.YES_OPTION) {
+        return opcion == JOptionPane.YES_OPTION;
+    }
+
+    /**
+     * Obtiene todas las mascotas almacenadas en la base de datos.
+     *
+     * @return ArrayList de MascotaVO con todos los registros de la base
+     * @throws RuntimeException si ocurre algún error al consultar la base
+     */
+    private ArrayList<MascotaVO> obtenerTodasLasMascotas() {
+        List<MascotaVO> listaMascotas = mascotaDAO.listaDeMascotas();
+        return new ArrayList<>(listaMascotas);
+    }
+
+    /**
+     * Guarda la lista de mascotas en el archivo serializado definido en Config.
+     *
+     * @param mascotas lista de mascotas a guardar
+     */
+    private void guardarDatosSerializados(ArrayList<MascotaVO> mascotas) {
+        serializableDAO.setArchivo(new File(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES));
+        serializableDAO.guardar(mascotas);
+    }
+
+    /**
+     * Guarda la lista de mascotas en el archivo de acceso aleatorio definido en
+     * Config.
+     *
+     * @param mascotas lista de mascotas a guardar
+     */
+    private void guardarArchivoAleatorio(ArrayList<MascotaVO> mascotas) {
+        gestorAleatorio.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
+        gestorAleatorio.insertarMascotas(mascotas);
+    }
+
+    /**
+     * Muestra un mensaje de información al usuario.
+     *
+     * @param mensaje texto a mostrar
+     */
+    private void mostrarMensajeExito(String mensaje) {
+        JOptionPane.showMessageDialog(vista, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Muestra un mensaje de error al usuario.
+     *
+     * @param mensaje texto a mostrar
+     */
+    private void mostrarMensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(vista, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Controla el proceso de salida de la aplicación, incluyendo confirmación
+     * del usuario y guardado de datos en archivos serializados y de acceso
+     * aleatorio.
+     */
+    private void salirAplicacion() {
+        if (confirmarSalidaUsuario()) {
+            try {
+                ArrayList<MascotaVO> mascotas = obtenerTodasLasMascotas();
+                guardarDatosSerializados(mascotas);
+                guardarArchivoAleatorio(mascotas);
+                mostrarMensajeExito("Datos guardados correctamente");
+            } catch (Exception ex) {
+                mostrarMensajeError("Error al guardar los datos:\n" + ex.getMessage());
+                ex.printStackTrace();
+            }
+
+            // Cerramos la aplicación
             System.exit(0);
         }
     }
+
 }

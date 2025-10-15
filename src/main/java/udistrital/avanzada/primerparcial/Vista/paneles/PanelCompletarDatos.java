@@ -104,6 +104,7 @@ public class PanelCompletarDatos extends PanelBaseSeccion {
                 TemaVisual.BOTON_TEXTO
         );
         btnGuardar.setPreferredSize(new Dimension(180, 35));
+        btnGuardar.setActionCommand("guardar");
 
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         panelBoton.setOpaque(false);
