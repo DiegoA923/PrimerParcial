@@ -5,6 +5,7 @@ import java.util.*;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IPropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 
 /**
@@ -17,7 +18,7 @@ import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
  */
 public class GestorArchivoProperties {
 
-    private final PropertiesDAO propertiesDAO;
+    private final IPropertiesDAO propertiesDAO;
     private final Properties cachedProps;
 
     /**

@@ -7,6 +7,7 @@ import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionProperties;
 import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperties;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.IMascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.MascotaDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
@@ -31,7 +32,7 @@ import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
  */
 public class ControlMascota {
 
-    private MascotaDAO mascotaDAO;
+    private IMascotaDAO mascotaDAO;
 
     public ControlMascota() {
 
