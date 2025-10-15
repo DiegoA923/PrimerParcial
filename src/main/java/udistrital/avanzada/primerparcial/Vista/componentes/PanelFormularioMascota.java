@@ -5,6 +5,7 @@ import java.awt.*;
 import udistrital.avanzada.primerparcial.Modelo.Clasificacion;
 import udistrital.avanzada.primerparcial.Modelo.TipoAlimento;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
+import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
 
 /**
  * Clase {@code PanelFormularioMascota}.
@@ -154,4 +155,60 @@ public class PanelFormularioMascota extends JPanel {
     public JComboBox<TipoAlimento> getComboTipoAlimento() {
         return comboTipoAlimento;
     }
+
+    /**
+     * Carga los datos de una mascota existente en el formulario.
+     * <p>
+     * Este método recibe un objeto {@link MascotaVO} y actualiza los campos de
+     * texto y listas desplegables del formulario con los valores
+     * correspondientes. Es útil cuando se desea mostrar o editar la información
+     * de una mascota seleccionada desde la tabla del menú principal.
+     * </p>
+     *
+     * @param mascota objeto {@link MascotaVO} que contiene la información de la
+     * mascota a mostrar. Si es {@code null}, el método no realiza ninguna
+     * acción.
+     */
+    public void cargarDatosMascota(MascotaVO mascota) {
+        if (mascota == null) {
+            return;
+        }
+
+        campoNombre.getCampoTexto().setText(mascota.getNombreComun());
+        campoApodo.getCampoTexto().setText(mascota.getApodo());
+        campoFamilia.getCampoTexto().setText(mascota.getFamilia());
+        campoGenero.getCampoTexto().setText(mascota.getGenero());
+        campoEspecie.getCampoTexto().setText(mascota.getEspecie());
+
+        comboClasificacion.setSelectedItem(mascota.getClasificacion());
+        comboTipoAlimento.setSelectedItem(mascota.getTipoAlimento());
+    }
+
+    /**
+     * Obtiene los valores ingresados actualmente en el formulario y los
+     * encapsula en un nuevo objeto {@link MascotaVO}.
+     * <p>
+     * Este método se utiliza normalmente cuando se desea registrar o actualizar
+     * los datos de una mascota en la base de datos. La información capturada se
+     * devuelve lista para ser procesada por la capa de control o el DAO
+     * correspondiente.
+     * </p>
+     *
+     * @return objeto {@link MascotaVO} construido a partir de los valores
+     * ingresados en el formulario.
+     */
+    public MascotaVO obtenerDatosMascota() {
+        MascotaVO mascota = new MascotaVO();
+
+        mascota.setNombreComun(campoNombre.getCampoTexto().getText().trim());
+        mascota.setApodo(campoApodo.getCampoTexto().getText().trim());
+        mascota.setFamilia(campoFamilia.getCampoTexto().getText().trim());
+        mascota.setGenero(campoGenero.getCampoTexto().getText().trim());
+        mascota.setEspecie(campoEspecie.getCampoTexto().getText().trim());
+        mascota.setClasificacion((Clasificacion) comboClasificacion.getSelectedItem());
+        mascota.setTipoAlimento((TipoAlimento) comboTipoAlimento.getSelectedItem());
+
+        return mascota;
+    }
+
 }

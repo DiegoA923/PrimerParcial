@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelCompletarDatos;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelInsertar;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelMenu;
+import udistrital.avanzada.primerparcial.Vista.paneles.PanelModificar;
 
 /**
  * Clase VentanaPrincipal.
@@ -32,7 +33,8 @@ public class VentanaPrincipal extends JFrame {
     public static final String PANEL_MENU = "PANEL_MENU";
     public static final String PANEL_COMPLETAR = "PANEL_COMPLETAR";
     public static final String PANEL_INSERTAR = "PANEL_INSERTAR";
-
+    public static final String PANEL_MODIFICAR = "PANEL_MODIFICAR";
+ 
     // Atributos de vista
     private final CardLayout cardLayout;
     private final JPanel panelContenedor;
@@ -40,6 +42,7 @@ public class VentanaPrincipal extends JFrame {
     private final PanelMenu panelMenu;
     private final PanelCompletarDatos panelCompletarDatos;
     private final PanelInsertar panelInsertar;
+    private final PanelModificar panelModificar;
 
     
     // Constructor de la clase VentanaPrincipal.
@@ -65,11 +68,13 @@ public class VentanaPrincipal extends JFrame {
                 "Datos de la Mascota Seleccionada"
         );
         panelInsertar = new PanelInsertar();
+        panelModificar = new PanelModificar();
 
         // Registro de paneles
         panelContenedor.add(panelMenu, PANEL_MENU);
         panelContenedor.add(panelCompletarDatos, PANEL_COMPLETAR);
         panelContenedor.add(panelInsertar, PANEL_INSERTAR);
+        panelContenedor.add(panelModificar, PANEL_MODIFICAR);
 
         add(panelContenedor, BorderLayout.CENTER);
     }
@@ -94,6 +99,10 @@ public class VentanaPrincipal extends JFrame {
 
     public PanelInsertar getPanelInsertar() {
         return panelInsertar;
+    }
+    
+    public PanelModificar getPanelModificar(){
+        return panelModificar;
     }
 
     /**

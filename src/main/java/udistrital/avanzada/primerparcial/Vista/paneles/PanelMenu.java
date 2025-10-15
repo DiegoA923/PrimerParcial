@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import udistrital.avanzada.primerparcial.Modelo.*;
 import udistrital.avanzada.primerparcial.Vista.componentes.*;
 import udistrital.avanzada.primerparcial.Vista.estilos.TemaVisual;
@@ -32,6 +32,8 @@ public class PanelMenu extends JPanel {
     private JComboBox<String> comboFiltro;
     private JComboBox<Enum<?>> comboEnum;
     private JButton btnRefrescar;
+    private List<MascotaVO> mascotas = new ArrayList<>();
+
 
     // Botones (barra inferior)
     private BotonPersonalizado btnInsertar;
@@ -39,19 +41,12 @@ public class PanelMenu extends JPanel {
     private BotonPersonalizado btnEliminar;
     private BotonPersonalizado btnSalir;
 
-    // Datos (temporalmente en memoria)
-    private List<MascotaVO> mascotas;
-
-    /**
-     * Constructor.
-     */
     public PanelMenu() {
         inicializar();
     }
 
-    /**
-     * Inicializa la interfaz del panel.
-     */
+    
+    // Inicializa la interfaz del panel.
     private void inicializar() {
         setLayout(new BorderLayout());
         setBackground(TemaVisual.FONDO);
@@ -75,9 +70,8 @@ public class PanelMenu extends JPanel {
         add(crearBarraInferior(), BorderLayout.SOUTH);
     }
 
-    /**
-     * Crea el panel superior de búsqueda (filtro inteligente + refrescar).
-     */
+    
+    // Crea el panel superior de búsqueda (filtro inteligente + refrescar). 
     private JComponent crearPanelBusqueda() {
         JPanel caja = new JPanel(new GridBagLayout());
         caja.setOpaque(true);
@@ -124,12 +118,10 @@ public class PanelMenu extends JPanel {
                 btnRefrescar.setBackground(TemaVisual.PRIMARIO_OSCURO);
             }
         });
-        btnRefrescar.addActionListener(e -> refrescarTabla(mascotas));
 
         // Listeners del filtro
         comboFiltro.addActionListener(e -> cambiarTipoEntrada());
-        campoBusqueda.addActionListener(e -> filtrarMascotas());
-        comboEnum.addActionListener(e -> filtrarMascotas());
+        
 
         // Layout: filtro | input (texto o enum) | refrescar
         gbc.gridx = 0;
@@ -152,7 +144,7 @@ public class PanelMenu extends JPanel {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
 
-        String[] columnas = {"ID", "Apodo", "Nombre Común", "Clasificación", "Familia", "Género", "Especie", "Tipo de alimento"};
+        String[] columnas = {"ID", "Nombre Común", "Apodo", "Clasificación", "Familia", "Género", "Especie", "Tipo de alimento"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int col) {
@@ -188,10 +180,6 @@ public class PanelMenu extends JPanel {
                 return c;
             }
         });
-
-        // datos de ejemplo y refresco inicial
-        cargarMascotasEjemplo();
-        refrescarTabla(mascotas);
 
         JScrollPane scroll = new JScrollPane(tablaMascotas);
         scroll.setBorder(BorderFactory.createCompoundBorder(
@@ -250,64 +238,61 @@ public class PanelMenu extends JPanel {
         repaint();
     }
 
-    // Carga datos de ejemplo (temporal) para mostrar en la tabla.
-    private void cargarMascotasEjemplo() {
-        mascotas = List.of(
-                new MascotaVO(1, "Draco", "Iguana verde", Clasificacion.REPTIL, "Iguanidae", "Iguana", "Iguana iguana", TipoAlimento.VERDURAS),
-                new MascotaVO(2, "Kiwi", "Guacamayo azul", Clasificacion.AVE, "Psittacidae", "Ara", "Ara ararauna", TipoAlimento.FRUTAS)
-        );
-    }
-
     /**
-     * Refresca la tabla con la lista proporcionada.
+     * Refresca la tabla con la lista proporcionada desde el controlador.
+     * <p>
+     * Este método ahora es público para cumplir con el patrón MVC y permitir
+     * que el controlador actualice directamente la vista tras consultas al DAO.
+     * Ya no existen datos locales ni ejemplos en memoria.
+     * </p>
      *
-     * @param lista lista de mascotas a mostrar
+     * @param lista lista de mascotas obtenida desde la base de datos
      */
-    private void refrescarTabla(List<MascotaVO> lista) {
+    public void refrescarTabla(List<MascotaVO> lista) {
         modeloTabla.setRowCount(0);
-        if (lista == null) {
+        if (lista == null || lista.isEmpty()) {
             return;
         }
         for (MascotaVO m : lista) {
             modeloTabla.addRow(new Object[]{
-                m.getId(), m.getApodo(), m.getNombreComun(),
-                m.getClasificacion(), m.getFamilia(),
-                m.getGenero(), m.getEspecie(),
+                m.getId(),
+                m.getNombreComun(),
+                m.getApodo(),
+                m.getClasificacion(),
+                m.getFamilia(),
+                m.getGenero(),
+                m.getEspecie(),
                 m.getTipoAlimento()
             });
         }
+        this.mascotas = lista; // Sincroniza la lista con la tabla
     }
 
-    //  Filtra la lista de mascotas en memoria según el criterio seleccionado.
-    private void filtrarMascotas() {
-        String filtro = (String) comboFiltro.getSelectedItem();
-        if (filtro == null) {
-            return;
+    /**
+     * Devuelve la mascota seleccionada en la tabla de registro.
+     * <p>
+     * Este método permite al controlador identificar qué mascota fue
+     * seleccionada por el usuario para realizar operaciones como modificación o
+     * eliminación. Si no hay ninguna fila seleccionada o la lista está vacía,
+     * devuelve {@code null}.
+     * </p>
+     *
+     * @return la instancia de {@link MascotaVO} correspondiente a la fila
+     * seleccionada, o {@code null} si no hay selección válida.
+     */
+    public MascotaVO getMascotaSeleccionada() {
+        int fila = tablaMascotas.getSelectedRow();
+
+        // Validación: sin selección o lista inconsistente
+        if (fila == -1 || mascotas == null || fila >= mascotas.size()) {
+            return null;
         }
 
-        List<MascotaVO> filtradas;
-        if ("Clasificación".equals(filtro) || "Tipo de alimento".equals(filtro)) {
-            Enum<?> valor = (Enum<?>) comboEnum.getSelectedItem();
-            if (valor == null) {
-                filtradas = mascotas;
-            } else {
-                filtradas = mascotas.stream()
-                        .filter(m -> "Clasificación".equals(filtro)
-                        ? m.getClasificacion() == valor
-                        : m.getTipoAlimento() == valor)
-                        .collect(Collectors.toList());
-            }
-        } else {
-            String texto = campoBusqueda.getText().trim().toLowerCase();
-            filtradas = mascotas.stream()
-                    .filter(m -> "Apodo".equals(filtro)
-                    ? m.getApodo().toLowerCase().contains(texto)
-                    : m.getFamilia().toLowerCase().contains(texto))
-                    .collect(Collectors.toList());
-        }
-
-        refrescarTabla(filtradas);
+        // Retorna la mascota correspondiente a la fila seleccionada
+        return mascotas.get(fila);
     }
+    
+    
 
     /**
      * Métodos de acceso a los botones, tabla y filtros del panel.

@@ -23,9 +23,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexion;
  */
 public class MascotaDAO {
 
-    
     // Interfaz de conexión a la base de datos, inyectada desde el exterior.
-     
     private final IConexion conexion;
 
     /**
@@ -58,12 +56,12 @@ public class MascotaDAO {
     public boolean insertarMascota(MascotaVO mascota) {
         String verificarSql = """
             SELECT COUNT(*) FROM mascotas 
-            WHERE nombreComun = ? AND apodo = ? AND clasificacion = ? 
-            AND familia = ? AND genero = ? AND especie = ? AND tipoAlimento = ?
+            WHERE nombre_comun = ? AND apodo = ? AND clasificacion = ? 
+            AND familia = ? AND genero = ? AND especie = ? AND tipo_alimento = ?
             """;
 
         String insertarSql = """
-            INSERT INTO mascotas (nombreComun, apodo, clasificacion, familia, genero, especie, tipoAlimento)
+            INSERT INTO mascotas (nombre_comun, apodo, clasificacion, familia, genero, especie, tipo_alimento)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
@@ -126,12 +124,12 @@ public class MascotaDAO {
                 MascotaVO mascota = new MascotaVO();
                 mascota.setId(rs.getInt("id"));
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombreComun"));
+                mascota.setNombreComun(rs.getString("nombre_comun"));
                 mascota.setClasificacion(Clasificacion.valueOf(rs.getString("clasificacion").toUpperCase()));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipoAlimento").toUpperCase()));
+                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipo_alimento").toUpperCase()));
                 mascotas.add(mascota);
             }
 
@@ -170,12 +168,12 @@ public class MascotaDAO {
                 MascotaVO mascota = new MascotaVO();
                 mascota.setId(rs.getInt("id"));
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombreComun"));
+                mascota.setNombreComun(rs.getString("nombre_comun"));
                 mascota.setClasificacion(Clasificacion.valueOf(rs.getString("clasificacion").toUpperCase()));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipoAlimento").toUpperCase()));
+                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipo_alimento").toUpperCase()));
                 mascotas.add(mascota);
             }
 
@@ -218,12 +216,12 @@ public class MascotaDAO {
                 MascotaVO mascota = new MascotaVO();
                 mascota.setId(rs.getInt("id"));
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombreComun"));
+                mascota.setNombreComun(rs.getString("nombre_comun"));
                 mascota.setClasificacion(Clasificacion.valueOf(rs.getString("clasificacion").toUpperCase()));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipoAlimento").toUpperCase()));
+                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipo_alimento").toUpperCase()));
                 mascotas.add(mascota);
             }
 
@@ -263,12 +261,12 @@ public class MascotaDAO {
                 MascotaVO mascota = new MascotaVO();
                 mascota.setId(rs.getInt("id"));
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombreComun"));
+                mascota.setNombreComun(rs.getString("nombre_comun"));
                 mascota.setClasificacion(Clasificacion.valueOf(rs.getString("clasificacion").toUpperCase()));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipoAlimento").toUpperCase()));
+                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipo_alimento").toUpperCase()));
                 mascotas.add(mascota);
             }
 
@@ -298,7 +296,7 @@ public class MascotaDAO {
      */
     public ArrayList<MascotaVO> consultarPorTipoAlimento(TipoAlimento tipoAlimento) {
         ArrayList<MascotaVO> mascotas = new ArrayList<>();
-        String sql = "SELECT * FROM mascotas WHERE tipoAlimento = ?";
+        String sql = "SELECT * FROM mascotas WHERE tipo_alimento = ?";
 
         try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -309,12 +307,12 @@ public class MascotaDAO {
                 MascotaVO mascota = new MascotaVO();
                 mascota.setId(rs.getInt("id"));
                 mascota.setApodo(rs.getString("apodo"));
-                mascota.setNombreComun(rs.getString("nombreComun"));
+                mascota.setNombreComun(rs.getString("nombre_comun"));
                 mascota.setClasificacion(Clasificacion.valueOf(rs.getString("clasificacion").toUpperCase()));
                 mascota.setFamilia(rs.getString("familia"));
                 mascota.setGenero(rs.getString("genero"));
                 mascota.setEspecie(rs.getString("especie"));
-                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipoAlimento").toUpperCase()));
+                mascota.setTipoAlimento(TipoAlimento.valueOf(rs.getString("tipo_alimento").toUpperCase()));
                 mascotas.add(mascota);
             }
 
@@ -377,7 +375,7 @@ public class MascotaDAO {
     public boolean modificarMascota(MascotaVO mascota) {
         String sql = """
             UPDATE mascotas
-            SET nombreComun = ?, apodo = ?, clasificacion = ?, tipoAlimento = ?
+            SET nombre_comun = ?, apodo = ?, clasificacion = ?, tipo_alimento = ?
             WHERE id = ?
             """;
 
@@ -397,6 +395,58 @@ public class MascotaDAO {
         } finally {
             conexion.desconectar();
         }
+    }
+
+    /**
+     * Verifica si una mascota ya existe en la base de datos.
+     * <p>
+     * Este método realiza una búsqueda en la tabla {@code mascotas},
+     * comprobando si existe algún registro con los mismos valores clave que
+     * identifican a la mascota: nombre común, apodo, clasificación, familia,
+     * género, especie y tipo de alimento.
+     * </p>
+     * <p>
+     * <b>Modificación (Diego - 2025-10-14):</b> Se añadió este método para
+     * evitar duplicados durante la carga de mascotas desde el archivo
+     * {@code configuracion.properties}. Esto garantiza que las mascotas
+     * completas se inserten una sola vez en la base de datos y no vuelvan a
+     * cargarse en futuras ejecuciones.
+     * </p>
+     *
+     * @param mascota objeto {@link MascotaVO} con los datos a verificar
+     * @return {@code true} si ya existe un registro igual en la base de datos;
+     * {@code false} si no existe
+     * @throws RuntimeException si ocurre un error durante la verificación
+     */
+    public boolean existeMascota(MascotaVO mascota) {
+        String sql = """
+            SELECT COUNT(*) FROM mascotas
+            WHERE nombre_comun = ? AND apodo = ? AND clasificacion = ?
+            AND familia = ? AND genero = ? AND especie = ? AND tipo_alimento = ?
+            """;
+
+        try (Connection con = conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, mascota.getNombreComun());
+            ps.setString(2, mascota.getApodo());
+            ps.setString(3, mascota.getClasificacion() != null ? mascota.getClasificacion().name() : null);
+            ps.setString(4, mascota.getFamilia());
+            ps.setString(5, mascota.getGenero());
+            ps.setString(6, mascota.getEspecie());
+            ps.setString(7, mascota.getTipoAlimento() != null ? mascota.getTipoAlimento().name() : null);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar existencia de mascota: " + e.getMessage(), e);
+        } finally {
+            conexion.desconectar();
+        }
+
+        return false;
     }
 
 }
