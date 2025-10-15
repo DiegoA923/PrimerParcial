@@ -1,5 +1,7 @@
 package udistrital.avanzada.primerparcial.Modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase abstracta que representa un animal genérico dentro del sistema.
  * <p>
@@ -13,7 +15,7 @@ package udistrital.avanzada.primerparcial.Modelo;
  * @modified Diego - 2025-10-10: Se reemplazaron los String por Enum para
  * clasificación y alimento.
  */
-public abstract class Animal {
+public abstract class Animal implements Serializable {
 
     protected String nombreComun;
     protected Clasificacion clasificacion;
