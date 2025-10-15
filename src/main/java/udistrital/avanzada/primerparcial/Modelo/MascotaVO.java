@@ -1,5 +1,7 @@
 package udistrital.avanzada.primerparcial.Modelo;
 
+import java.io.Serializable;
+
 /**
  * Representa una mascota exótica dentro del sistema.
  * <p>
@@ -14,7 +16,7 @@ package udistrital.avanzada.primerparcial.Modelo;
  * @modified Diego - 2025-10-10: Se adaptó la clase para usar enums en lugar de
  * Strings.
  */
-public class MascotaVO extends Animal {
+public class MascotaVO extends Animal implements Serializable {
 
     private int id;
     private String apodo;
