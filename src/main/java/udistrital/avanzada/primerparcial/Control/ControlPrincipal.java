@@ -6,29 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.Config;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
-import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionProperties;
-import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperties;
-import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.PropertiesDAO;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
 /**
- * Clase ControlPrincipal.
+ * ControlPrincipal.
  * <p>
- * Controla el flujo general del programa desde el arranque, coordinando la
- * lógica del sistema, la interfaz gráfica y la persistencia de datos. Crea la
- * vista principal y delega los eventos generales a {@link ControlVentana}.
+ * Controlador principal que coordina la lógica general del programa. Gestiona
+ * la inicialización de la vista, el control de mascotas y la persistencia de
+ * datos tanto en base de datos como en archivos.
+ * </p>
+ *
+ * <p>
+ * Al iniciar, el sistema intenta cargar datos desde el archivo
+ * <b>configuracion.properties</b>. Si no está disponible, intenta cargar desde
+ * un archivo serializado; si tampoco existe, crea uno vacío.
  * </p>
  *
  * @author Diego
- * @version 1.1
+ * @version 1.2
  * @since 2025-10-13
- *
- * <p>
- * <b>Modificación:</b> Se integró la inicialización de los componentes de
- * lógica ({@link ControlMascota}, {@link SerializableDAO}) y la creación de la
- * ventana principal. Además, se añadió la gestión del archivo serializado y
- * aleatorio para mantener la persistencia de las mascotas.
- * </p>
+ * 
+ * <b>Modificación:</b> Se actualizó la secuencia de inicialización para
+ * integrar la carga dinámica desde el archivo .properties mediante
+ * {@link ControlMascota#cargarDesdeProperties()} y la creación de
+ * {@link ControlVentana} con inyección de dependencias.
  */
 public class ControlPrincipal {
 
@@ -38,56 +39,80 @@ public class ControlPrincipal {
     private final ControlMascota controlMascota;
 
     /**
-     * Constructor principal del controlador general.
+     * Constructor principal.
      * <p>
-     * Inicializa la lógica del sistema, la vista principal y gestiona la carga
-     * o creación del archivo serializado de mascotas.
+     * Inicializa la vista, los controladores y verifica la existencia de los
+     * archivos de datos requeridos.
      * </p>
      */
     public ControlPrincipal() {
         this.serializableDAO = new SerializableDAO();
         this.controlMascota = new ControlMascota();
-        controlMascota.cargarDesdeProperties();
         this.vista = new VentanaPrincipal();
         this.controlVentana = new ControlVentana(vista, this);
-
         inicializar();
     }
 
-    
-    // Inicializa el flujo de la aplicación verificando la existencia del archivo serializado y properties.
-    
+    /**
+     * Inicializa la aplicación verificando los archivos de datos existentes y
+     * cargando la información inicial del sistema.
+     * <ul>
+     * <li>Si existe <b>configuracion.properties</b>, se cargan las mascotas
+     * desde allí mediante {@link ControlMascota#cargarDesdeProperties()},
+     * insertando las completas en base de datos y devolviendo solo las
+     * incompletas.</li>
+     * <li>Si existe un archivo serializado, se carga desde él.</li>
+     * <li>De lo contrario, se crea un archivo serializado vacío para uso
+     * futuro.</li>
+     * </ul>
+     *
+     * <p>
+     * Una vez cargados los datos, delega en
+     * {@link ControlVentana#mostrarVistaInicial(List)} la decisión de qué panel
+     * mostrar: el de completar datos (si hay mascotas incompletas) o el menú
+     * principal.
+     * </p>
+     *
+     * <b>Modificación:</b> Diego - 2025-10-14. Se reestructuró la lógica. Ahora
+     * {@code ControlPrincipal} solo carga los datos y delega la elección de la
+     * vista inicial a {@code ControlVentana}, eliminando la dependencia directa
+     * de la vista.
+     */
     private void inicializar() {
         File archivoSerializado = new File(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
         File archivoProperties = new File(Config.RUTA_CARPETA_PRECARGA);
-        
-        if (archivoProperties.exists()) {
-        // Si existe el archivo de propiedades, se cargan las mascotas desde allí
-        controlMascota.cargarDesdeProperties();
-    } else if (archivoSerializado.exists()) {
-        // Si no existe el properties pero sí el archivo serializado, se usa ese
-        controlVentana.obtenerArchivoSerializado(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
-    } else {
-        // Si no hay ninguno, se crea un nuevo archivo serializado vacío
-        serializableDAO.setArchivo(archivoSerializado);
-    }
 
+        List<MascotaVO> listaIncompletas = new ArrayList<>();
+
+        if (archivoProperties.exists()) {
+            // Carga desde .properties → inserta completas y devuelve las incompletas
+            listaIncompletas = controlMascota.cargarDesdeProperties();
+        } else if (archivoSerializado.exists()) {
+            // Carga desde archivo serializado si no hay properties
+            controlVentana.obtenerArchivoSerializado(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
+        } else {
+            // Si no hay ningún archivo, crear uno vacío
+            serializableDAO.setArchivo(archivoSerializado);
+        }
+
+        // Mostrar ventana y delegar qué vista se debe abrir primero
         vista.setVisible(true);
-        vista.mostrarPanel(VentanaPrincipal.PANEL_COMPLETAR);
+        controlVentana.mostrarVistaInicial(listaIncompletas);
     }
 
     /**
-     * Procesa el archivo serializado seleccionado por el usuario.
+     * Procesa un archivo serializado seleccionado desde la vista.
      *
-     * @param archivo archivo serializado a procesar
+     * @param archivo archivo binario que contiene mascotas serializadas
      */
     public void procesarArchivoSerializado(File archivo) {
         serializableDAO.setArchivo(archivo);
     }
 
-    
-    // Carga las mascotas desde el archivo serializado y las inserta en la base de datos.
-   
+    /**
+     * Inserta en la base de datos las mascotas cargadas desde un archivo
+     * serializado.
+     */
     public void insertarDatosDesdeSerializador() {
         try {
             ArrayList<MascotaVO> mascotas = serializableDAO.listaDeMascotas();
@@ -95,15 +120,18 @@ public class ControlPrincipal {
                 controlMascota.insertarMascota(mascota);
             }
         } catch (RuntimeException e) {
-            // Manejo de error opcional (log o mensaje)
+            // Error no crítico: se omite en esta versión
         }
     }
 
-    // Guarda los datos antes de salir de la aplicación.
-    
+    /**
+     * Guarda el estado actual antes de cerrar la aplicación.
+     * <p>
+     * Serializa las mascotas y las persiste también en un archivo aleatorio.
+     * </p>
+     */
     public void salir() {
         ArrayList<MascotaVO> mascotas;
-
         try {
             mascotas = controlMascota.obtenerMascotas();
         } catch (RuntimeException e) {
@@ -117,16 +145,15 @@ public class ControlPrincipal {
         try {
             serializableDAO.guardar(mascotas);
         } catch (RuntimeException e) {
-            // Log o manejo de error
+            // Manejo de error silencioso
         }
 
-        // Persistir los datos en archivo aleatorio
         GestorArchivoAleatorio gestor = new GestorArchivoAleatorio();
         gestor.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
         try {
             gestor.insertarMascotas(mascotas);
         } catch (RuntimeException e) {
-            // Log o manejo de error
+            // Manejo de error silencioso
         }
     }
 }

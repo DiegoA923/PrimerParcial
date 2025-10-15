@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.primerparcial.Modelo.ModeloConexion;
 
 import java.io.IOException;
@@ -15,7 +11,7 @@ import java.util.Properties;
  * Garantiza un acceso centralizado y controlado al recurso del archivo properties.
  * </p>
  *
- * @author sebas
+ * @author Sebas
  * @version 1.0
  * @since 2025-10-10
  */
