@@ -10,7 +10,7 @@ import java.io.RandomAccessFile;
  * @author Mauricio
  * @since 2025-10-11
  */
-public class ConexionAleatorio {
+public class ConexionAleatorio implements IConexionAleatorio {
 
     //Instanciar sin condicionales
     private static final ConexionAleatorio instancia = new ConexionAleatorio();
@@ -32,7 +32,7 @@ public class ConexionAleatorio {
 
     
     // Conectar al archivo aleatorio
-     
+    @Override
     public void conectar() {
         try {
             archivo = new RandomAccessFile(ruta, "rw");
@@ -44,7 +44,7 @@ public class ConexionAleatorio {
 
     
     // Desconectar del archivo aleatorio
-     
+    @Override
     public void desconectar() {
         try {
             archivo.close();
@@ -69,7 +69,7 @@ public class ConexionAleatorio {
 
     
     // Obtener archivo de trabajo despues de llamar metodo conectar
-    
+    @Override
     public RandomAccessFile getArchivo() {
         return archivo;
     }

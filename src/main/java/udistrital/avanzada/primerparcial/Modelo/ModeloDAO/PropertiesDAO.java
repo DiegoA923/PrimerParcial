@@ -26,7 +26,7 @@ import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.IConexionProperti
  * @version 3.0
  * @since 2025-10-11
  */
-public class PropertiesDAO {
+public class PropertiesDAO implements IPropertiesDAO {
 
     /**
      * Conexión al archivo de propiedades.

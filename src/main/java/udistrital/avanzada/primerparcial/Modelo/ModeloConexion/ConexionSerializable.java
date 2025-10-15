@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream;
  */
 
 // Implementa IConexionSobrescribible para manejar conexiones con opción de sobrescritura.
-public class ConexionSerializable implements IConexionSobrescribible {
+public class ConexionSerializable implements IConexionSerializable {
 
     //Canal de salida para escribir en el archivo de serializacion
     private FileOutputStream fileOut;
@@ -51,7 +51,7 @@ public class ConexionSerializable implements IConexionSobrescribible {
     
     // Metodo para conectar a los canales de salida y entrada
     
-    
+    @Override
     public void conectar() {
         try {
             //Para escribir            
@@ -74,6 +74,7 @@ public class ConexionSerializable implements IConexionSobrescribible {
 
     
     // Metodo para cerrar la conexion con los canales
+    @Override
     public void desconectar() {
         //Intetamos cerrar cada Stream
         try {
@@ -97,11 +98,13 @@ public class ConexionSerializable implements IConexionSobrescribible {
         } catch (IOException ioe) {
         }
     }
-
+    
+    @Override
     public ObjectOutputStream getSalida() {
         return salida;
     }
-
+    
+    @Override
     public ObjectInputStream getEntrada() {
         return entrada;
     }
@@ -141,6 +144,7 @@ public class ConexionSerializable implements IConexionSobrescribible {
      * 
      * @return true si existe, false si no
      */
+    @Override
     public boolean archivoExiste() {
         try {
             return archivo.exists() && archivo.isFile();
