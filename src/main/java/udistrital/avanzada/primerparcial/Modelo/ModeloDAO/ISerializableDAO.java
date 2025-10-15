@@ -8,7 +8,7 @@ import udistrital.avanzada.primerparcial.Modelo.IArchivoExiste;
 /**
  *
  * @author Mauricio
- * @since 2025-10-2025
+ * @since 2025-10-14
  */
 public interface ISerializableDAO extends IListaMascotas, IArchivoExiste, IArchivoModificar {
     void guardar(ArrayList<MascotaVO> mascotas);
