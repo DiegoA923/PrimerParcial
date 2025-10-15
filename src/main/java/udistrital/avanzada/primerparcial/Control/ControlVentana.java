@@ -165,8 +165,10 @@ public class ControlVentana {
      * Permite al usuario seleccionar un archivo serializado y lo procesa.
      *
      * @param ruta ruta inicial del explorador de archivos
+     * @return archivo seleccionado
      */
-    public void obtenerArchivoSerializado(String ruta) {
+    public File obtenerArchivoSerializado(String ruta) {
+        File archivoSeleccionado = null;
         JFileChooser chooser = vista.getFileChoser(
                 "Elija el archivo serializado",
                 "bin",
@@ -175,8 +177,31 @@ public class ControlVentana {
         );
         int seleccion = chooser.showOpenDialog(null);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File archivoSeleccionado = chooser.getSelectedFile();
-            logica.procesarArchivoSerializado(archivoSeleccionado);
+            archivoSeleccionado = chooser.getSelectedFile();
         }
+        return archivoSeleccionado;
+    }
+    
+    /**
+     * Permite al usuario seleccionar un archivo propiedades y lo procesa.
+     *
+     * @param ruta ruta inicial del explorador de archivos
+     * @param mensaje que se solicita
+     * @return archivo seleccionado por usuario
+     */
+    public File obtenerArchivoPropiedades(String ruta, String mensaje) {
+        File archivoSeleccionado = null;
+        JFileChooser chooser = vista.getFileChoser(
+                mensaje,
+                "properties",
+                JFileChooser.FILES_ONLY,
+                ruta
+        );
+        int seleccion = chooser.showOpenDialog(null);
+        
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            archivoSeleccionado = chooser.getSelectedFile();         
+        }
+        return archivoSeleccionado;
     }
 }
