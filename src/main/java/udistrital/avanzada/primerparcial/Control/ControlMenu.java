@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.util.List;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
-
 /**
  * ControlMenu.
  * <p>
@@ -37,7 +36,10 @@ public class ControlMenu {
     private final GestorArchivoAleatorio gestorAleatorio;
     private final SerializableDAO serializableDAO;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 602a89a7f87621b739eea21860cbfb2d3e92545f
 
     /**
      * Constructor del controlador.
