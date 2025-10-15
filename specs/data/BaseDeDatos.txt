@@ -1,0 +1,34 @@
+Base de Datos
+
+Nombre de la base de datos: primerparcial
+Usuario: root
+Contraseña: "" 
+
+El archivo de creación de la base de datos se encuentra en data/mascotas.sql. Este archivo contiene el script completo para crear la tabla mascotas y puede importarse directamente en phpMyAdmin u otra herramienta de gestión de bases de datos.
+
+Tabla: mascotas
+
+Descripción general:
+Esta tabla almacena información sobre las mascotas registradas en el sistema, incluyendo datos biológicos, clasificaciones y tipo de alimento que consumen.
+
+Campos principales:
+
+id (int(4)) → Identificador único de la mascota (clave primaria, autoincremental).
+
+nombre_comun (varchar(20)) → Nombre común de la mascota.
+
+apodo (varchar(20)) → Apodo o nombre alternativo de la mascota.
+
+clasificacion (enum) → Clasificación biológica general: REPTIL, MAMIFERO, AVE, ANFIBIO, PEZ, INVERTEBRADO.
+
+familia (varchar(20)) → Familia biológica a la que pertenece la mascota.
+
+genero (varchar(20)) → Género de la mascota.
+
+especie (varchar(20)) → Especie de la mascota.
+
+tipo_alimento (enum) → Tipo de alimento: LACTEOS, CARNES, VERDURAS, FRUTAS, FORRAJES, CEREALES, LEGUMINOSAS, OMNIVOROS.
+
+Llaves e índices:
+
+id es la clave primaria y se genera automáticamente (AUTO_INCREMENT).

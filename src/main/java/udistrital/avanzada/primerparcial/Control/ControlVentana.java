@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.List;
 import javax.swing.JFileChooser;
 import udistrital.avanzada.primerparcial.Modelo.Config;
+import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 import udistrital.avanzada.primerparcial.Vista.paneles.PanelModificar;
 
 /**
@@ -40,17 +41,23 @@ public class ControlVentana {
     private ControlCompletarDatos controlCompletar;
     private final ControlMascota controlMascota;
     private ControlModificar controlModificar;
+    private GestorArchivoAleatorio gestorAleatorio;
+    private SerializableDAO serializableDAO;
 
     /**
      * Constructor principal del controlador de ventana.
      *
      * @param vista instancia principal de la interfaz
      * @param logica controlador central del sistema
+     * @param gestorAleatorio
+     * @param serializableDAO
      */
-    public ControlVentana(VentanaPrincipal vista, ControlPrincipal logica) {
+    public ControlVentana(VentanaPrincipal vista, ControlPrincipal logica, GestorArchivoAleatorio gestorAleatorio, SerializableDAO serializableDAO) {
         this.vista = vista;
         this.logica = logica;
         this.controlMascota = new ControlMascota();
+        this.serializableDAO = new SerializableDAO();
+        this.gestorAleatorio = new GestorArchivoAleatorio();
 
         inicializarControladores();
         cargarDatosIniciales();
@@ -72,7 +79,7 @@ public class ControlVentana {
         PanelCompletarDatos panelCompletar = vista.getPanelCompletarDatos();
         PanelModificar panelModificar = vista.getPanelModificar();
 
-        controlMenu = new ControlMenu(vista, panelMenu);
+        controlMenu = new ControlMenu(vista, panelMenu, gestorAleatorio, serializableDAO);
         controlInsertar = new ControlInsertar(vista, panelInsertar);
         controlModificar = new ControlModificar(vista, panelModificar);
 

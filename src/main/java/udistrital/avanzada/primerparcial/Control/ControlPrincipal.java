@@ -41,8 +41,9 @@ public class ControlPrincipal {
 
     private final VentanaPrincipal vista;
     private final ControlVentana controlVentana;
-    private final SerializableDAO serializableDAO;
     private final ControlMascota controlMascota;
+    private final GestorArchivoAleatorio gestorAleatorio;
+    private final SerializableDAO serializableDAO;
 
     /**
      * Constructor principal.
@@ -52,10 +53,11 @@ public class ControlPrincipal {
      * </p>
      */
     public ControlPrincipal() {
-        this.serializableDAO = new SerializableDAO();
         this.controlMascota = new ControlMascota();
         this.vista = new VentanaPrincipal();
-        this.controlVentana = new ControlVentana(vista, this);
+        this.gestorAleatorio = new GestorArchivoAleatorio();
+        this.serializableDAO = new SerializableDAO();
+        this.controlVentana = new ControlVentana(vista, this, this.gestorAleatorio,this.serializableDAO);
         inicializar();
     }
 
@@ -212,10 +214,9 @@ public class ControlPrincipal {
             // Manejo de error silencioso
         }
 
-        GestorArchivoAleatorio gestor = new GestorArchivoAleatorio();
-        gestor.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
+        gestorAleatorio.setRutaArchivo(Config.RUTA_PREDETERMINADA_ARCHIVO_AlEATORIO_ANIMALES);
         try {
-            gestor.insertarMascotas(mascotas);
+            gestorAleatorio.insertarMascotas(mascotas);
         } catch (RuntimeException e) {
             // Manejo de error silencioso
         }
