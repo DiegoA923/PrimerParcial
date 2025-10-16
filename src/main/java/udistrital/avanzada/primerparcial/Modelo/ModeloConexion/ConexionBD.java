@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Clase ConexionBD.
  * <p>
- * Implementa la interfaz {@link IConexion} y aplica el patrón Singleton para 
+ * Implementa la interfaz {@link IConexion} y aplica el patrón Singleton para
  * garantizar una única instancia de conexión con la base de datos durante la ejecución del aplicativo.
  * </p>
  *
@@ -75,6 +75,19 @@ public class ConexionBD implements IConexion {
         } catch (IOException e) {
             System.out.println("Error al cargar el archivo de configuración de la base de datos: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Metodo para configurar los datos para la conexion a la base de datos
+     * 
+     * @param url
+     * @param user
+     * @param password 
+     */
+    public void config(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
     }
 
     /**

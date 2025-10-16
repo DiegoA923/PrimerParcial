@@ -2,10 +2,16 @@ package udistrital.avanzada.primerparcial.Control;
 
 import udistrital.avanzada.primerparcial.Vista.VentanaPrincipal;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import udistrital.avanzada.primerparcial.Modelo.Config;
 import udistrital.avanzada.primerparcial.Modelo.MascotaVO;
+import udistrital.avanzada.primerparcial.Modelo.ModeloConexion.ConexionBD;
 import udistrital.avanzada.primerparcial.Modelo.ModeloDAO.SerializableDAO;
 
 /**
@@ -81,20 +87,78 @@ public class ControlPrincipal {
      * de la vista.
      */
     private void inicializar() {
-        File archivoSerializado = new File(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
-        File archivoProperties = new File(Config.RUTA_CARPETA_PRECARGA);
+        File archivoPropiedades = null;
+        String rutaSerializado = null;
+        String rutaAleatorio = null;
+        String rutaPropiedades = null;
+        String dbUrl = null;
+        String dbUser = null;
+        String dbPassword = null;
+        do {
+            archivoPropiedades = controlVentana.obtenerArchivoPropiedades(
+                    "specs/data",
+                    "Eliga Archivo de propiedades valido con configuracion base"
+            );
+            if (archivoPropiedades.exists()) {
+                Properties props = new Properties();
+                try (FileInputStream fis = new FileInputStream(archivoPropiedades)) {
+                    props.load(fis);
+                    // Leer propiedades
+                    rutaSerializado = props.getProperty("ruta.serializado");
+                    Paths.get(rutaSerializado);
+                    rutaAleatorio = props.getProperty("ruta.aleatorio");
+                    Paths.get(rutaAleatorio);
+                    rutaPropiedades = props.getProperty("ruta.propiedades");
+                    Paths.get(rutaPropiedades);
+                    dbUrl = props.getProperty("db.url");
+                    dbUser = props.getProperty("db.user");
+                    dbPassword = props.getProperty("db.password");
+                    ConexionBD.getInstancia().config(dbUrl, dbUser, dbPassword);
 
+                } catch (Exception e) {
+                    rutaSerializado = null;
+                    rutaAleatorio = null;
+                    rutaPropiedades = null;
+                    dbUrl = null;
+                    dbUser = null;
+                    dbPassword = null;
+                }
+
+            }
+            // Archivo no tiene propiedades esenciales para el funcionamiento 
+            // de la app entonces se sigue pidiendo un archivo válido
+        } while (rutaSerializado == null
+                || rutaAleatorio == null
+                || dbUrl == null
+                || dbUser == null
+                || dbPassword == null
+                || rutaPropiedades == null);
+
+        File archivoSerializado = new File(rutaSerializado);
+        File archivoPropiedadesMascotas = new File(rutaPropiedades);
+        
         List<MascotaVO> listaIncompletas = new ArrayList<>();
 
-        if (archivoProperties.exists()) {
+        if (archivoPropiedadesMascotas.exists() && !archivoSerializado.exists()) {
             // Carga desde .properties → inserta completas y devuelve las incompletas
             listaIncompletas = controlMascota.cargarDesdeProperties();
         } else if (archivoSerializado.exists()) {
             // Carga desde archivo serializado si no hay properties
-            controlVentana.obtenerArchivoSerializado(Config.RUTA_PREDETERMINADA_ARCHIVO_SERIALIZADO_ANIMALES);
+            File archivoSeleccionado = null;
+            do {                
+               archivoSeleccionado = controlVentana.obtenerArchivoSerializado(rutaSerializado);
+               serializableDAO.setArchivo(archivoSerializado);
+            } while (archivoSeleccionado == null);            
+            // A todas las mascotas les faltara el tipo de comida por la serializacion
+            // entonces todas estan incompletas 
+            try {
+                listaIncompletas = serializableDAO.listaDeMascotas();
+            } catch (Exception e) {
+                
+            }            
         } else {
-            // Si no hay ningún archivo, crear uno vacío
-            serializableDAO.setArchivo(archivoSerializado);
+            // Si no hay ningún archivo, crear uno vacío para la serializacion
+            serializableDAO.setArchivo(archivoSerializado);            
         }
 
         // Mostrar ventana y delegar qué vista se debe abrir primero
